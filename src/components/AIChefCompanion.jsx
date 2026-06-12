@@ -37,6 +37,7 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
 
   const [selectedChef, setSelectedChef] = useState('aria'); // 'aria', 'marco', 'ranveer'
   const [activeStep, setActiveStep] = useState(currentStepIndex);
+  const [mobileTab, setMobileTab] = useState('guide'); // 'guide', 'chat'
   
   // Chat History
   const [chatLog, setChatLog] = useState([]);
@@ -442,11 +443,29 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
         </button>
       </div>
 
+      {/* Mobile Tab Selector */}
+      <div className="guided-mobile-tabs" style={{ borderBottom: '1px solid var(--border-color)', background: 'var(--surface-primary)' }}>
+        <button 
+          className={`mobile-tab-btn ${mobileTab === 'guide' ? 'active' : ''}`}
+          onClick={() => setMobileTab('guide')}
+          type="button"
+        >
+          {isHi ? "वीडियो और कदम" : "Video & Steps"}
+        </button>
+        <button 
+          className={`mobile-tab-btn ${mobileTab === 'chat' ? 'active' : ''}`}
+          onClick={() => setMobileTab('chat')}
+          type="button"
+        >
+          {isHi ? "एआई शेफ चैट" : "AI Chef Chat"}
+        </button>
+      </div>
+
       {/* Main Split Body */}
-      <div style={{ flexGrow: 1, display: 'grid', gridTemplateColumns: '1.2fr 1fr', overflow: 'hidden' }}>
+      <div className={`guided-split-body ${mobileTab === 'guide' ? 'show-guide' : 'show-chat'}`}>
         
         {/* Left Side: Video + Progress Navigation */}
-        <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px', overflowY: 'auto', borderRight: '1px solid var(--border-color)' }}>
+        <div className="guided-left-col">
           
           {/* YouTube Video Embed */}
           <div className="video-wrapper" style={{ marginBottom: 0, borderRadius: 'var(--radius-lg)' }}>
@@ -505,7 +524,7 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
         </div>
 
         {/* Right Side: AI Chat Companion Panel */}
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'var(--surface-primary)' }}>
+        <div className="guided-right-col">
           
           {/* Chef Personality Selector Header */}
           <div style={{ padding: '16px', borderBottom: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>

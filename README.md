@@ -32,42 +32,6 @@ Culinary Craft is a premium web-based cooking companion designed for culinary en
 
 ---
 
-## 🚀 Local Installation
-
-Follow these steps to run Culinary Craft on your local machine:
-
-### 1. Clone & Setup Workspace
-```bash
-git clone https://github.com/Vasundhara703/culinary-craft.git
-cd culinary-craft
-```
-
-### 2. Install Dependencies
-```bash
-npm install
-```
-
-### 3. Environment Variables (Optional)
-To test the email feedback dispatch and OTP logins locally, create a `.env` file in the root directory:
-```env
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-gmail-app-password
-```
-*Note: If `EMAIL_PASS` is missing, the backend will gracefully log feedback messages and generated OTP codes directly to your terminal console for local debugging.*
-
-### 4. Run Development Server
-```bash
-npm run dev
-```
-Open [http://localhost:5173](http://localhost:5173) in your browser to view the application.
-
-### 5. Build for Production
-```bash
-npm run build
-```
-
----
-
 ## ✍️ Creator
 
 Designed and developed with passion by **Vasundhara Mishra**. 

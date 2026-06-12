@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   X, Volume2, VolumeX, Send, HelpCircle, AlertTriangle, 
   Sparkles, RefreshCw, MessageSquare, Mic, Play, ArrowLeft, ArrowRight
@@ -84,6 +85,18 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
       }
     };
   }, []);
+
+  // Prevent body scroll when overlay is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   // Text-To-Speech function
   const speakAIResponse = (text) => {
@@ -425,7 +438,7 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
     }
   };
 
-  return (
+  return createPortal(
     <div className="guided-mode-overlay animate-fade-in" style={{ backgroundColor: 'var(--bg-secondary)' }}>
       {/* Header */}
       <div className="guided-header" style={{ borderBottomColor: 'var(--border-color)', background: 'var(--surface-primary)' }}>
@@ -531,7 +544,7 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
             <span style={{ fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>
               {isHi ? "एआई शेफ व्यक्तित्व चुनें:" : "Select AI Chef Personality:"}
             </span>
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               {Object.entries(CHEFS).map(([key, chef]) => (
                 <button
                   key={key}
@@ -570,7 +583,8 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
                 fontSize: '22px',
                 border: `3px solid ${CHEFS[selectedChef].color}`,
                 boxShadow: isSpeaking ? `0 0 12px ${CHEFS[selectedChef].color}` : 'none',
-                animation: isSpeaking ? 'pulse-ring 1.5s infinite' : 'none'
+                animation: isSpeaking ? 'pulse-ring 1.5s infinite' : 'none',
+                flexShrink: 0
               }}
             >
               {CHEFS[selectedChef].avatar}
@@ -584,7 +598,7 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
             {isSpeaking && (
               <button 
                 className="btn-icon-round" 
-                style={{ width: '30px', height: '30px', background: '#e74c3c', color: 'white', border: 'none' }}
+                style={{ width: '30px', height: '30px', background: '#e74c3c', color: 'white', border: 'none', flexShrink: 0 }}
                 onClick={handleStopSpeech}
                 title="Mute Speech"
               >
@@ -665,7 +679,7 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
             <button 
               type="submit" 
               className="btn-icon-round" 
-              style={{ background: 'var(--accent-primary)', color: 'white', border: 'none', width: '38px', height: '38px' }}
+              style={{ background: 'var(--accent-primary)', color: 'white', border: 'none', width: '38px', height: '38px', flexShrink: 0 }}
               disabled={!userInput.trim() || isTyping}
             >
               <Send size={16} />
@@ -673,6 +687,7 @@ export default function AIChefCompanion({ isOpen, onClose, recipe, currentStepIn
           </form>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

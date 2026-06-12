@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   ArrowLeft, Clock, Users, Flame, Play, Pause, RotateCcw, 
   Check, CheckSquare, Square, ShoppingBag, Sparkles, BookOpen, Video,
@@ -819,7 +820,7 @@ export default function RecipeDetail({ recipe, onBack, onAddToShoppingList }) {
       />
 
       {/* Celebration Modal */}
-      {showCelebration && (
+      {showCelebration && createPortal(
         <div 
           className="guided-mode-overlay animate-fade-in" 
           style={{ 
@@ -876,7 +877,8 @@ export default function RecipeDetail({ recipe, onBack, onAddToShoppingList }) {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

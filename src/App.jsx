@@ -318,8 +318,8 @@ export default function App() {
       try {
         const parsed = JSON.parse(savedRecipes);
         
-        // Upgrade database to v4 to incorporate new Indian recipes without losing user edits
-        if (dbVersion !== 'v4') {
+        // Upgrade database to v5 to incorporate new Indian recipes without losing user edits
+        if (dbVersion !== 'v5') {
           // Identify which default/Kaggle recipes are not already in the user's database
           const existingIds = new Set(parsed.map(r => r.id));
           const missingRecipes = [...defaultRecipes, ...kaggleRecipes].filter(r => !existingIds.has(r.id));
@@ -341,7 +341,7 @@ export default function App() {
           } else {
             initialRecipes = parsed;
           }
-          localStorage.setItem('recipes_db_version', 'v4');
+          localStorage.setItem('recipes_db_version', 'v5');
         } else {
           initialRecipes = parsed;
         }
@@ -349,12 +349,12 @@ export default function App() {
         console.error("Failed to parse local recipes database, loading defaults with Kaggle dataset", e);
         initialRecipes = [...defaultRecipes, ...kaggleRecipes];
         localStorage.setItem('recipes_db', JSON.stringify(initialRecipes));
-        localStorage.setItem('recipes_db_version', 'v4');
+        localStorage.setItem('recipes_db_version', 'v5');
         localStorage.setItem('recipes_db_last_updated', '0');
       }
     } else {
       localStorage.setItem('recipes_db', JSON.stringify(initialRecipes));
-      localStorage.setItem('recipes_db_version', 'v4');
+      localStorage.setItem('recipes_db_version', 'v5');
     }
     setRecipes(initialRecipes);
 
@@ -543,7 +543,7 @@ export default function App() {
       const mergedDefaults = [...defaultRecipes, ...kaggleRecipes];
       setRecipes(mergedDefaults);
       localStorage.setItem('recipes_db', JSON.stringify(mergedDefaults));
-      localStorage.setItem('recipes_db_version', 'v4');
+      localStorage.setItem('recipes_db_version', 'v5');
       const timestamp = Date.now();
       localStorage.setItem('recipes_db_last_updated', timestamp.toString());
       uploadToCloud({
@@ -681,7 +681,7 @@ export default function App() {
 
                   {/* Category Filter row */}
                   <div className="categories-bar">
-                    {allTags.slice(0, 8).map((tag, idx) => (
+                    {allTags.slice(0, 16).map((tag, idx) => (
                       <button
                         key={idx}
                         className={`btn-filter ${selectedTag === tag ? 'active' : ''}`}

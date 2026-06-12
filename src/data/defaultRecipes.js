@@ -1152,5 +1152,828 @@ export const defaultRecipes = [
         duration: 2
       }
     ]
+  },
+  {
+    id: "hara-bhara-kabab",
+    title: "Hara Bhara Kabab",
+    description: "A nutritious and tasty vegetarian starter patty made with fresh spinach, green peas, mashed potatoes, and fragrant Indian spices.",
+    image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/5F2w-2v7NlE",
+    difficulty: "medium",
+    prepTime: 15,
+    cookTime: 15,
+    servings: 4,
+    calories: 180,
+    tags: ["Vegetarian", "Indian", "Starter", "Healthy"],
+    ingredients: [
+      { name: "Fresh Spinach (Palak)", quantity: 2, unit: "cups", alternative: "Kale or Swiss chard" },
+      { name: "Green Peas", quantity: 1, unit: "cup", alternative: "Edamame or boiled green beans" },
+      { name: "Potatoes (Boiled & Mashed)", quantity: 2, unit: "large", alternative: "Sweet potatoes or boiled raw banana" },
+      { name: "Ginger-Garlic Paste", quantity: 1, unit: "tsp", alternative: "1/2 tsp ginger powder + 1/2 tsp garlic powder" },
+      { name: "Green Chillies", quantity: 2, unit: "pcs", alternative: "1/2 tsp red chili flakes" },
+      { name: "Garam Masala Powder", quantity: 1, unit: "tsp", alternative: "Allspice powder" },
+      { name: "Breadcrumbs", quantity: 4, unit: "tbsp", alternative: "Roasted chickpea flour (Besan)" },
+      { name: "Cornstarch", quantity: 2, unit: "tbsp", alternative: "Rice flour or arrowroot powder" },
+      { name: "Cashew Halves (for garnish)", quantity: 12, unit: "pcs", alternative: "Almond slices" },
+      { name: "Cooking Oil", quantity: 2, unit: "tbsp", alternative: "Ghee or butter" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Blanch spinach in hot water for 2 minutes, plunge in ice water, squeeze out water, and grind with green peas and green chillies into a coarse paste.",
+        text_hi: "पालक को 2 मिनट गर्म पानी में उबालें, फिर ठंडे पानी में डालें, निचोड़कर हरी मटर और मिर्च के साथ पीस लें।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "Mix the spinach-peas paste with mashed potatoes, ginger-garlic paste, garam masala, salt, breadcrumbs, and cornstarch to make a dough.",
+        text_hi: "पालक-मटर पेस्ट को उबले आलू, अदरक-लहसुन पेस्ट, गरम मसाला, नमक, ब्रेडक्रम्ब्स और कॉर्नस्टार्च के साथ मिलाकर मिश्रण तैयार करें।",
+        duration: 5
+      },
+      {
+        step: 3,
+        text: "Divide into equal portions, shape into flat patties, and press a cashew half in the center of each patty.",
+        text_hi: "मिश्रण को बराबर भागों में बांटकर टिकिया का आकार दें और प्रत्येक के बीच में काजू का टुकड़ा दबाएं।",
+        duration: 5
+      },
+      {
+        step: 4,
+        text: "Heat 2 tbsp oil in a skillet. Pan-fry the kababs on medium heat until golden and crispy on both sides.",
+        text_hi: "एक पैन में 2 चम्मच तेल गर्म करें। कबाब को मध्यम आंच पर दोनों तरफ से सुनहरा और कुरकुरा होने तक सेकें।",
+        duration: 8
+      },
+      {
+        step: 5,
+        text: "Serve hot with green mint chutney or tomato ketchup.",
+        text_hi: "पुदीने की चटनी या टोमैटो केचप के साथ गर्मागर्म परोसें।",
+        duration: 2
+      }
+    ]
+  },
+  {
+    id: "paneer-tikka-starter",
+    title: "Classic Paneer Tikka",
+    description: "Skewered paneer cubes, bell peppers, and onions marinated in a spiced yogurt blend and roasted to perfection.",
+    image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/g2Jd4P0oZlg",
+    difficulty: "medium",
+    prepTime: 20,
+    cookTime: 15,
+    servings: 3,
+    calories: 280,
+    tags: ["Vegetarian", "Indian", "Starter", "Paneer"],
+    ingredients: [
+      { name: "Paneer", quantity: 300, unit: "g", alternative: "Firm Tofu blocks" },
+      { name: "Thick Yogurt (Hung Curd)", quantity: 0.5, unit: "cup", alternative: "Vegan sour cream or cashew paste" },
+      { name: "Ginger-Garlic Paste", quantity: 1, unit: "tbsp", alternative: "1/2 tbsp freshly grated ginger & garlic" },
+      { name: "Kashmiri Red Chili Powder", quantity: 1, unit: "tbsp", alternative: "Paprika" },
+      { name: "Kasuri Methi", quantity: 1, unit: "tsp", alternative: "Dried oregano" },
+      { name: "Mustard Oil", quantity: 1, unit: "tbsp", alternative: "Olive oil or vegetable oil" },
+      { name: "Bell Peppers (mixed colors, cubed)", quantity: 1.5, unit: "cups", alternative: "Zucchini slices" },
+      { name: "Onions (cubed & layers separated)", quantity: 1, unit: "cup", alternative: "Shallots" },
+      { name: "Chaat Masala", quantity: 1, unit: "tsp", alternative: "Lemon juice" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Whisk hung curd with ginger-garlic paste, chili powder, salt, kasuri methi, mustard oil, and lemon juice in a large bowl.",
+        text_hi: "दही को अदरक-लहसुन पेस्ट, मिर्च, नमक, कसूरी मेथी, सरसों तेल और नींबू रस के साथ अच्छी तरह फेंटें।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "Gently mix paneer cubes, bell peppers, and onions in the marinade. Cover and refrigerate for 20-30 minutes.",
+        text_hi: "पनीर, शिमला मिर्च और प्याज को दही के मिश्रण में मिलाएं। ढककर 20-30 मिनट के लिए फ्रिज में रखें।",
+        duration: 25
+      },
+      {
+        step: 3,
+        text: "Thread the marinated paneer and vegetables alternately onto wooden or metal skewers.",
+        text_hi: "मैरीनेट किए पनीर और सब्जियों को एक-एक करके सीख (स्क्यूअर्स) पर पिरोएं।",
+        duration: 5
+      },
+      {
+        step: 4,
+        text: "Roast on a hot griddle with a brush of butter or bake in a preheated oven at 400°F (200°C) for 12-15 minutes until charred at the edges.",
+        text_hi: "गर्म तवे पर मक्खन लगाकर या ओवन में 200 डिग्री सेल्सियस पर 12-15 मिनट तक किनारों के सिकने तक सेकें।",
+        duration: 15
+      },
+      {
+        step: 5,
+        text: "Sprinkle chaat masala on top and serve hot with lemon wedges and mint chutney.",
+        text_hi: "ऊपर से चाट मसाला छिड़कें और नींबू व पुदीने की चटनी के साथ परोसें।",
+        duration: 2
+      }
+    ]
+  },
+  {
+    id: "onion-pakora",
+    title: "Crispy Onion Pakora (Kanda Bhaji)",
+    description: "Crispy, deep-fried onion fritters made with gram flour, rice flour, green chillies, and warm spices. A perfect rainy-day tea snack.",
+    image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/5F2w-2v7NlE",
+    difficulty: "easy",
+    prepTime: 10,
+    cookTime: 15,
+    servings: 4,
+    calories: 220,
+    tags: ["Vegetarian", "Indian", "Starter", "Snacks"],
+    ingredients: [
+      { name: "Onions (thinly sliced)", quantity: 2, unit: "large", alternative: "Cabbage or Potato julienned" },
+      { name: "Gram Flour (Besan)", quantity: 1, unit: "cup", alternative: "Chickpea flour" },
+      { name: "Rice Flour", quantity: 2, unit: "tbsp", alternative: "Cornstarch" },
+      { name: "Green Chillies (chopped)", quantity: 2, unit: "pcs", alternative: "Red pepper flakes" },
+      { name: "Ajwain (Carom Seeds)", quantity: 0.5, unit: "tsp", alternative: "Cumin seeds" },
+      { name: "Turmeric Powder", quantity: 0.25, unit: "tsp", alternative: "Curry powder" },
+      { name: "Red Chili Powder", quantity: 0.5, unit: "tsp", alternative: "Cayenne pepper" },
+      { name: "Fresh Cilantro (chopped)", quantity: 3, unit: "tbsp", alternative: "Fresh parsley" },
+      { name: "Oil", quantity: 1, unit: "cup", alternative: "For deep frying, or cooking spray for air frying" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Rub sliced onions with salt in a bowl and let them sit for 5 minutes. The onions will release their natural water.",
+        text_hi: "कटे हुए प्याज में नमक मिलाकर 5 मिनट रखें ताकि प्याज अपना प्राकृतिक पानी छोड़ दें।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "Add chopped green chillies, cilantro, ajwain, turmeric, and chili powder. Mix well.",
+        text_hi: "हरी मिर्च, धनिया पत्ता, अजवाइन, हल्दी और लाल मिर्च पाउडर डालकर मिलाएं।",
+        duration: 2
+      },
+      {
+        step: 3,
+        text: "Add gram flour and rice flour. Mix using your hands, squeezing the onions to form a tight, moist mixture. Do not add water unless absolutely needed.",
+        text_hi: "बेसन & चावल का आटा मिलाएं। बिना पानी डाले हाथों से निचोड़ते हुए मिश्रण को मिलाएं।",
+        duration: 3
+      },
+      {
+        step: 4,
+        text: "Drop small portions of the onion mixture into hot oil. Fry on medium heat until golden brown and super crunchy.",
+        text_hi: "गर्म तेल में छोटे-छोटे हिस्से डालें। मध्यम आंच पर सुनहरा और कुरकुरा होने तक तलें।",
+        duration: 8
+      },
+      {
+        step: 5,
+        text: "Drain on paper towels and serve hot with green chutney and hot tea (Chai).",
+        text_hi: "पेपर टॉवल पर निकालें और हरी चटनी व गरमागरम चाय के साथ परोसें।",
+        duration: 2
+      }
+    ]
+  },
+  {
+    id: "gobi-manchurian",
+    title: "Crispy Gobi Manchurian",
+    description: "A legendary Indo-Chinese starter of crispy fried cauliflower florets tossed in a sweet, sour, spicy, and umami-rich Manchurian sauce.",
+    image: "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/H3k9YvGZ1Lw",
+    difficulty: "medium",
+    prepTime: 20,
+    cookTime: 20,
+    servings: 3,
+    calories: 340,
+    tags: ["Vegetarian", "Indian", "Starter", "Indo-Chinese"],
+    ingredients: [
+      { name: "Cauliflower Florets (Gobi)", quantity: 3, unit: "cups", alternative: "Broccoli or Mushroom heads" },
+      { name: "Cornstarch", quantity: 4, unit: "tbsp", alternative: "All-purpose flour" },
+      { name: "All-purpose Flour (Maida)", quantity: 3, unit: "tbsp", alternative: "Rice flour" },
+      { name: "Soy Sauce", quantity: 2, unit: "tbsp", alternative: "Tamari" },
+      { name: "Chili Sauce (Red or Green)", quantity: 2, unit: "tbsp", alternative: "Sriracha" },
+      { name: "Tomato Ketchup", quantity: 2, unit: "tbsp", alternative: "Chili-garlic sauce" },
+      { name: "Ginger (finely chopped)", quantity: 1, unit: "tbsp", alternative: "Ginger paste" },
+      { name: "Garlic (finely chopped)", quantity: 1.5, unit: "tbsp", alternative: "Garlic paste" },
+      { name: "Spring Onion (Chopped)", quantity: 0.25, unit: "cup", alternative: "Cilantro" },
+      { name: "Oil", quantity: 1, unit: "cup", alternative: "For frying + 1 tbsp for sauce" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Blanch gobi florets in salted boiling water for 3 minutes, then drain and cool completely.",
+        text_hi: "फूलगोभी के टुकड़ों को नमकीन पानी में 3 मिनट उबालें, फिर पानी छानकर ठंडा होने दें।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "Make a smooth, thick batter of maida, cornstarch, salt, pepper, and water. Dip gobi florets and deep-fry until golden-brown and crispy.",
+        text_hi: "मैदा, कॉर्नस्टार्च, नमक, मिर्च & पानी का घोल बनाएं। गोभी को डुबोकर तेल में कुरकुरा होने तक तलें।",
+        duration: 10
+      },
+      {
+        step: 3,
+        text: "Heat 1 tbsp oil in a pan. Sauté chopped ginger, garlic, and spring onion whites for 2 minutes on high heat.",
+        text_hi: "एक पैन में 1 चम्मच तेल गर्म करें। बारीक कटे अदरक, लहसुन और प्याज के सफेद हिस्से को तेज आंच पर 2 मिनट भूनें।",
+        duration: 3
+      },
+      {
+        step: 4,
+        text: "Add soy sauce, chili sauce, tomato ketchup, and a splash of water. Mix a cornstarch slurry (1 tsp cornstarch + 2 tbsp water) and cook until sauce thickens.",
+        text_hi: "सोया सॉस, चिली सॉस, टोमैटो केचप और थोड़ा पानी डालें। कॉर्नस्टार्च की स्लरी डालकर सॉस को गाढ़ा होने दें।",
+        duration: 3
+      },
+      {
+        step: 5,
+        text: "Add the fried crispy gobi. Toss quickly for 1 minute on high heat so the sauce coats the florets. Garnish with spring onion greens and serve immediately.",
+        text_hi: "तली गोभी डालें और तेज आंच पर 1 मिनट चलाएं ताकि सॉस लिपट जाए। हरे प्याज से सजाकर तुरंत परोसें।",
+        duration: 2
+      }
+    ]
+  },
+  {
+    id: "aloo-tikki",
+    title: "Crispy Street Style Aloo Tikki",
+    description: "Crispy, spiced potato patties stuffed with soft green peas or paneer, shallow fried until gold, and served with tangy street chutneys.",
+    image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/5F2w-2v7NlE",
+    difficulty: "easy",
+    prepTime: 15,
+    cookTime: 15,
+    servings: 3,
+    calories: 210,
+    tags: ["Vegetarian", "Indian", "Starter", "Snacks"],
+    ingredients: [
+      { name: "Potatoes (Boiled & Mashed)", quantity: 4, unit: "medium", alternative: "Sweet potatoes" },
+      { name: "Breadcrumbs", quantity: 4, unit: "tbsp", alternative: "Roasted rice flour or cornstarch" },
+      { name: "Cornstarch", quantity: 2, unit: "tbsp", alternative: "Arrowroot powder" },
+      { name: "Chaat Masala", quantity: 1, unit: "tsp", alternative: "Lemon juice + salt" },
+      { name: "Red Chili Powder", quantity: 0.5, unit: "tsp", alternative: "Cayenne pepper" },
+      { name: "Green Peas (Boiled)", quantity: 0.5, unit: "cup", alternative: "Grated paneer" },
+      { name: "Fresh Cilantro (chopped)", quantity: 3, unit: "tbsp", alternative: "Fresh mint" },
+      { name: "Oil", quantity: 3, unit: "tbsp", alternative: "Ghee for shallow frying" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Mix mashed potatoes with breadcrumbs, cornstarch, salt, chili powder, and chaat masala to form a smooth dough.",
+        text_hi: "उबले आलू को ब्रेडक्रम्ब्स, कॉर्नस्टार्च, नमक, लाल मिर्च और चाट मसाला के साथ मिलाकर चिकना मिश्रण बनाएं।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "In a stuffing bowl, mash green peas with a pinch of garam masala and salt for the filling.",
+        text_hi: "एक कटोरी में उबले मटर को एक चुटकी गरम मसाला और नमक के साथ मैश कर स्टफिंग तैयार करें।",
+        duration: 3
+      },
+      {
+        step: 3,
+        text: "Take a portion of potato mixture, make a well in the center, stuff with a spoonful of peas, and seal to shape into a flat patty.",
+        text_hi: "आलू के मिश्रण का एक भाग लें, बीच में जगह बनाकर मटर की स्टफिंग भरें और सील कर टिकिया का आकार दें।",
+        duration: 5
+      },
+      {
+        step: 4,
+        text: "Heat oil in a flat pan. Shallow fry tikkis on medium-low heat until both sides are perfectly golden brown and crispy.",
+        text_hi: "तवे पर तेल गर्म करें। टिक्की को धीमी-मध्यम आंच पर दोनों तरफ से सुनहरा और कुरकुरा होने तक सेकें।",
+        duration: 10
+      },
+      {
+        step: 5,
+        text: "Garnish with sweet yogurt, green chutney, and tamarind chutney. Serve hot!",
+        text_hi: "मीठी दही, हरी चटनी और इमली की चटनी के साथ सजाकर गर्मागर्म परोसें!",
+        duration: 2
+      }
+    ]
+  },
+  {
+    id: "breakfast-poha",
+    title: "Kanda Poha",
+    description: "A light, healthy, and staple Indian breakfast made of flattened rice flakes, turmeric, potatoes, onions, curry leaves, and crunchy roasted peanuts.",
+    image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/5F2w-2v7NlE",
+    difficulty: "easy",
+    prepTime: 10,
+    cookTime: 15,
+    servings: 3,
+    calories: 240,
+    tags: ["Vegetarian", "Indian", "Breakfast", "Healthy"],
+    ingredients: [
+      { name: "Poha (Flattened Rice - Thick)", quantity: 2, unit: "cups", alternative: "Rolled oats (cooked dry)" },
+      { name: "Onion (finely chopped)", quantity: 1, unit: "medium", alternative: "Leeks" },
+      { name: "Potato (finely cubed)", quantity: 1, unit: "small", alternative: "Sweet potato" },
+      { name: "Peanuts", quantity: 3, unit: "tbsp", alternative: "Cashew pieces" },
+      { name: "Mustard Seeds", quantity: 1, unit: "tsp", alternative: "Cumin seeds" },
+      { name: "Curry Leaves", quantity: 10, unit: "leaves", alternative: "Bay leaf" },
+      { name: "Turmeric Powder", quantity: 0.5, unit: "tsp", alternative: "Saffron water" },
+      { name: "Green Chillies (chopped)", quantity: 2, unit: "pcs", alternative: "Chili flakes" },
+      { name: "Fresh Cilantro", quantity: 3, unit: "tbsp", alternative: "Parsley" },
+      { name: "Lemon Juice", quantity: 1, unit: "tbsp", alternative: "Lime juice" },
+      { name: "Cooking Oil", quantity: 2, unit: "tbsp", alternative: "Ghee" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Rinse poha in a colander under running water for 30 seconds until damp but not soggy. Sprinkle a pinch of salt and sugar, and set aside to fluff up.",
+        text_hi: "पोहे को पानी से 30 सेकंड धोएं। थोड़ा नमक और चीनी छिड़क कर अलग रख दें ताकि वह फूल जाए।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "Heat oil in a pan. Roast peanuts on low heat until crunchy and light brown. Remove and keep aside.",
+        text_hi: "पैन में तेल गर्म करें। मूंगफली को धीमी आंच पर कुरकुरा होने तक भूनकर अलग निकाल लें।",
+        duration: 5
+      },
+      {
+        step: 3,
+        text: "Sauté mustard seeds, curry leaves, and green chillies in the same oil. Add chopped onions and cubed potatoes, cooking until potatoes are soft (about 6-7 mins).",
+        text_hi: "उसी तेल में राई, कड़ी पत्ता और हरी मिर्च भूनें। प्याज और आलू के टुकड़े डालकर आलू के पकने तक (6-7 मिनट) पकाएं।",
+        duration: 8
+      },
+      {
+        step: 4,
+        text: "Stir in the turmeric powder and salt. Add the fluffed poha and fried peanuts. Toss gently on low heat for 2-3 minutes.",
+        text_hi: "हल्दी और नमक मिलाएं। फूला हुआ पोहा और भुनी मूंगफली डालकर धीमी आंच पर 2-3 मिनट हल्के हाथों से मिलाएं।",
+        duration: 3
+      },
+      {
+        step: 5,
+        text: "Turn off heat. Mix in lemon juice and chopped coriander. Serve hot with a sprinkle of grated coconut or sev.",
+        text_hi: "गैस बंद कर नींबू रस और धनिया मिलाएं। ऊपर से कसा हुआ नारियल या सेव छिड़ककर परोसें।",
+        duration: 2
+      }
+    ]
+  },
+  {
+    id: "breakfast-dosa",
+    title: "Classic Potato Masala Dosa",
+    description: "A paper-thin, crispy fermented rice and lentil crepe rolled with a spiced potato mash filling, served with coconut chutney and sambar.",
+    image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/CCab5oq0U3A",
+    difficulty: "hard",
+    prepTime: 20,
+    cookTime: 20,
+    servings: 3,
+    calories: 320,
+    tags: ["Vegetarian", "Indian", "Breakfast", "Gluten-Free"],
+    ingredients: [
+      { name: "Dosa Batter (Fermented)", quantity: 3, unit: "cups", alternative: "Instant Oats dosa batter" },
+      { name: "Potatoes (boiled & mashed)", quantity: 3, unit: "medium", alternative: "Mashed sweet potato" },
+      { name: "Onion (sliced)", quantity: 1, unit: "large", alternative: "Leeks" },
+      { name: "Mustard Seeds", quantity: 1, unit: "tsp", alternative: "Cumin seeds" },
+      { name: "Urad Dal", quantity: 1, unit: "tsp", alternative: "Chana dal" },
+      { name: "Curry Leaves", quantity: 8, unit: "leaves", alternative: "Bay leaf" },
+      { name: "Turmeric Powder", quantity: 0.5, unit: "tsp", alternative: "Ginger powder" },
+      { name: "Green Chillies (chopped)", quantity: 2, unit: "pcs", alternative: "Chili flakes" },
+      { name: "Ginger (grated)", quantity: 1, unit: "tsp", alternative: "Ginger paste" },
+      { name: "Ghee or Butter", quantity: 3, unit: "tbsp", alternative: "Vegetable oil" },
+      { name: "Fresh Cilantro", quantity: 3, unit: "tbsp", alternative: "Parsley" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Cook the potato stuffing: Heat 1 tbsp oil, sauté mustard seeds, urad dal, curry leaves, green chillies, and ginger. Add onions and sauté until soft.",
+        text_hi: "मसाला आलू बनाएं: तेल गर्म कर राई, उड़द दाल, कड़ी पत्ता, मिर्च और अदरक भूनें। प्याज डालकर नरम होने तक पकाएं।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "Stir in turmeric, salt, and mashed potatoes with 3 tbsp water. Simmer for 3 minutes, then add coriander leaves and set aside.",
+        text_hi: "हल्दी, नमक, उबले आलू और 3 चम्मच पानी मिलाएं। 3 मिनट पकाकर धनिया पत्ता डालें और अलग रखें।",
+        duration: 5
+      },
+      {
+        step: 3,
+        text: "Heat a non-stick flat tawa. Splash water to cool, wipe with a damp cloth, pour a ladle of dosa batter, and spread in a circular motion to make a thin crepe.",
+        text_hi: "तवे को गर्म करें, पानी छिड़क कर पोंछें, फिर एक चमचा बैटर डालकर गोल घुमाते हुए डोसा फैलाएं।",
+        duration: 3
+      },
+      {
+        step: 4,
+        text: "Drizzle ghee or butter around the edges and cook on medium heat until the bottom turns golden-brown and crispy.",
+        text_hi: "किनारों पर घी या मक्खन लगाएं और डोसे के नीचे से सुनहरा व कुरकुरा होने तक मध्यम आंच पर सेकें।",
+        duration: 4
+      },
+      {
+        step: 5,
+        text: "Place a portion of potato masala in the center, fold the dosa over it, and serve hot with sambar and coconut chutney.",
+        text_hi: "बीच में आलू मसाला रखें, डोसे को मोड़ें और सांबर व नारियल की चटनी के साथ गर्मागर्म परोसें।",
+        duration: 2
+      }
+    ]
+  },
+  {
+    id: "breakfast-idli",
+    title: "Soft and Fluffy Steamed Idli",
+    description: "Healthy steamed savory cakes made from fermented black lentil and rice batter. Soft, fluffy, and naturally gluten-free.",
+    image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/1vG1B7H4g5E",
+    difficulty: "medium",
+    prepTime: 10,
+    cookTime: 15,
+    servings: 4,
+    calories: 160,
+    tags: ["Vegetarian", "Indian", "Breakfast", "Healthy", "Gluten-Free"],
+    ingredients: [
+      { name: "Idli Batter (Fermented)", quantity: 4, unit: "cups", alternative: "Semolina (Rava) idli batter" },
+      { name: "Cooking Oil or Ghee", quantity: 1, unit: "tbsp", alternative: "Cooking spray" },
+      { name: "Water", quantity: 2, unit: "cups", alternative: "Vegetable stock for steam" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Bring 2 cups of water to a boil in an idli steamer or deep pot. Grease the idli plates/molds lightly with oil.",
+        text_hi: "स्टीमर या गहरे बर्तन में 2 कप पानी गर्म करें। इडली के सांचों में हल्का तेल लगाएं।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "Stir the fermented idli batter gently. Do not over-mix to keep the air pockets intact. Pour batter into the greased molds.",
+        text_hi: "इडली बैटर को धीरे से चलाएं। सांचों में बैटर भरें।",
+        duration: 3
+      },
+      {
+        step: 3,
+        text: "Place the idli plates into the steamer. Cover with the lid and steam on medium-high heat for 10-12 minutes.",
+        text_hi: "सांचों को स्टीमर में रखें। ढक्कन लगाकर मध्यम-तेज आंच पर 10-12 मिनट भाप में पकाएं।",
+        duration: 12
+      },
+      {
+        step: 4,
+        text: "Turn off the heat. Let it cool for 2-3 minutes. Use a wet spoon to gently scoop out the fluffy idlis from the plates.",
+        text_hi: "गैस बंद कर दें। 2-3 मिनट ठंडा होने दें। गीले चम्मच की मदद से इडली को बाहर निकालें।",
+        duration: 3
+      },
+      {
+        step: 5,
+        text: "Serve warm with tomato chutney, coconut chutney, and hot sambar.",
+        text_hi: "टमाटर की चटनी, नारियल की चटनी और गर्म सांबर के साथ गर्मागर्म परोसें।",
+        duration: 2
+      }
+    ]
+  },
+  {
+    id: "breakfast-paratha",
+    title: "Classic Dhaba Aloo Paratha",
+    description: "A popular whole wheat flatbread stuffed with a spicy, zesty mashed potato mixture, griddled with generous dollops of ghee or butter.",
+    image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/CCab5oq0U3A",
+    difficulty: "medium",
+    prepTime: 15,
+    cookTime: 20,
+    servings: 3,
+    calories: 290,
+    tags: ["Vegetarian", "Indian", "Breakfast", "Comfort Food"],
+    ingredients: [
+      { name: "Whole Wheat Flour (Atta)", quantity: 2, unit: "cups", alternative: "Gluten-free flour blend" },
+      { name: "Potatoes (boiled & mashed)", quantity: 3, unit: "medium", alternative: "Mashed sweet potato" },
+      { name: "Green Chillies (chopped)", quantity: 2, unit: "pcs", alternative: "1/2 tsp red chili flakes" },
+      { name: "Ginger (finely chopped)", quantity: 1, unit: "tsp", alternative: "Ginger powder" },
+      { name: "Coriander Powder", quantity: 1, unit: "tsp", alternative: "Cumin powder" },
+      { name: "Chaat Masala", quantity: 1, unit: "tsp", alternative: "Amchur (dry mango powder)" },
+      { name: "Ajwain (Carom Seeds)", quantity: 0.5, unit: "tsp", alternative: "Cumin seeds" },
+      { name: "Ghee or Butter", quantity: 4, unit: "tbsp", alternative: "Oil" },
+      { name: "Fresh Cilantro", quantity: 3, unit: "tbsp", alternative: "Parsley" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Knead whole wheat flour with water and 1 tsp oil into a soft, smooth dough. Cover and rest for 15 minutes.",
+        text_hi: "गेहूं के आटे में पानी और 1 चम्मच तेल मिलाकर नरम गूंथ लें। ढककर 15 मिनट के लिए छोड़ दें।",
+        duration: 10
+      },
+      {
+        step: 2,
+        text: "Mix mashed potatoes with chopped chillies, ginger, coriander powder, chaat masala, ajwain, fresh cilantro, and salt for the filling.",
+        text_hi: "आलू के मिश्रण में हरी मिर्च, अदरक, धनिया पाउडर, चाट मसाला, अजवाइन, धनिया पत्ता और नमक मिलाकर भरावन तैयार करें।",
+        duration: 5
+      },
+      {
+        step: 3,
+        text: "Pinch a ball of dough, roll into a 4-inch circle, place a ball of potato filling in the center, pleat the edges to cover, and seal.",
+        text_hi: "आटे की लोई लें, गोल बेलें, बीच में आलू का भरावन रखें और किनारों को समेटकर बंद करें।",
+        duration: 5
+      },
+      {
+        step: 4,
+        text: "Dust with dry flour and roll gently into a 7-inch flatbread, keeping it even to prevent the filling from leaking.",
+        text_hi: "सूखा आटा लगाकर हल्के हाथों से 7 इंच गोल पराठा बेलें ताकि भरावन बाहर न निकले।",
+        duration: 3
+      },
+      {
+        step: 5,
+        text: "Cook on a hot tawa. Flip and apply ghee/butter on both sides. Press gently until golden brown spots appear on both sides. Serve hot with pickle and yogurt!",
+        text_hi: "गर्म तवे पर सेकें। दोनों तरफ घी/मक्खन लगाकर चित्तीदार होने तक सेकें। अचार और दही के साथ परोसें।",
+        duration: 7
+      }
+    ]
+  },
+  {
+    id: "breakfast-vada",
+    title: "Crispy Medu Vada",
+    description: "Crispy on the outside, soft and fluffy inside, these donut-shaped black gram lentil fritters are flavored with ginger, curry leaves, and black pepper.",
+    image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/1vG1B7H4g5E",
+    difficulty: "hard",
+    prepTime: 20,
+    cookTime: 20,
+    servings: 3,
+    calories: 260,
+    tags: ["Vegetarian", "Indian", "Breakfast", "Gluten-Free"],
+    ingredients: [
+      { name: "Urad Dal (split black gram)", quantity: 1.5, unit: "cups", alternative: "Moong dal (yellow lentils)" },
+      { name: "Ginger (finely chopped)", quantity: 1, unit: "tsp", alternative: "Ginger paste" },
+      { name: "Green Chillies (chopped)", quantity: 2, unit: "pcs", alternative: "1/2 tsp black pepper powder" },
+      { name: "Whole Black Peppercorns", quantity: 1, unit: "tsp", alternative: "Ground black pepper" },
+      { name: "Curry Leaves (chopped)", quantity: 10, unit: "leaves", alternative: "Fresh cilantro" },
+      { name: "Rice Flour", quantity: 2, unit: "tbsp", alternative: "Semolina (Rava)" },
+      { name: "Oil", quantity: 1, unit: "cup", alternative: "For deep frying, or cooking spray for air frying" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Grind the soaked urad dal with minimal ice-cold water (2-3 tbsp) into a thick, fluffy, and smooth batter in a grinder.",
+        text_hi: "भीगी उड़द दाल को बहुत कम ठंडे पानी (2-3 चम्मच) के साथ पीसकर गाढ़ा व फ्लफी पेस्ट बना लें।",
+        duration: 15
+      },
+      {
+        step: 2,
+        text: "Beat the batter vigorously in a circular motion with your hands for 5 minutes to incorporate air, making the vadas soft and fluffy inside.",
+        text_hi: "बैटर को हाथों से 5 मिनट तेजी से फेंटें ताकि हवा भरने से वड़ा नरम बने।",
+        duration: 5
+      },
+      {
+        step: 3,
+        text: "Add chopped ginger, green chillies, peppercorns, curry leaves, salt, and rice flour. Mix well.",
+        text_hi: "कटा अदरक, हरी मिर्च, साबुत काली मिर्च, कड़ी पत्ता, नमक और चावल का आटा डालकर मिलाएं।",
+        duration: 3
+      },
+      {
+        step: 4,
+        text: "Wet your hands, take a small portion of batter, shape into a ball, make a hole in the center with your thumb, and drop gently into hot oil.",
+        text_hi: "हातों को गीला करें, बैटर लें, गोल कर अंगूठे से बीच में छेद करें और गर्म तेल में डालें।",
+        duration: 5
+      },
+      {
+        step: 5,
+        text: "Deep fry on medium heat until golden brown and crispy on both sides. Serve hot with sambar and coconut chutney.",
+        text_hi: "मध्यम आंच पर सुनहरा व कुरकुरा होने तक तलें। नारियल चटनी व सांबर के साथ परोसें।",
+        duration: 8
+      }
+    ]
+  },
+  {
+    id: "dessert-gajar-halwa",
+    title: "Traditional Gajar Ka Halwa",
+    description: "A rich, classic Indian carrot pudding slow-cooked with grated red carrots, whole milk, sugar, ghee, cardamom, and garnished with roasted nuts.",
+    image: "https://images.unsplash.com/photo-1620418029653-a75d5a7d36c1?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/n3H5wO1mpe0",
+    difficulty: "medium",
+    prepTime: 15,
+    cookTime: 45,
+    servings: 4,
+    calories: 380,
+    tags: ["Vegetarian", "Indian", "Dessert", "Sweet", "Comfort Food"],
+    ingredients: [
+      { name: "Carrots (Grated)", quantity: 5, unit: "cups", alternative: "Orange carrots" },
+      { name: "Full Fat Milk", quantity: 4, unit: "cups", alternative: "Almond milk + coconut cream" },
+      { name: "Ghee", quantity: 4, unit: "tbsp", alternative: "Vegan butter or Coconut oil" },
+      { name: "Sugar", quantity: 1, unit: "cup", alternative: "Jaggery powder or Maple syrup" },
+      { name: "Cardamom Powder", quantity: 1, unit: "tsp", alternative: "Nutmeg powder" },
+      { name: "Mixed Nuts (Cashews, Almonds, Pistachios)", quantity: 0.25, unit: "cup", alternative: "Raisins" },
+      { name: "Khoya (Mawa/Milk solids)", quantity: 0.25, unit: "cup", alternative: "Milk powder" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "In a heavy-bottomed pot, combine the grated carrots and milk. Cook over medium heat, stirring occasionally, until all the milk evaporates (about 30-35 mins).",
+        text_hi: "एक भारी बर्तन में घिसी गाजर और दूध मिलाएं। दूध के पूरी तरह सूखने तक (30-35 मिनट) मध्यम आंच पर पकाएं।",
+        duration: 35
+      },
+      {
+        step: 2,
+        text: "Once the milk evaporates, add ghee and sugar. Stir continuously on medium heat. The sugar will release moisture and turn liquid.",
+        text_hi: "दूध सूखने के बाद घी और चीनी मिलाएं। चीनी पानी छोड़ेगी, लगातार चलाते रहें।",
+        duration: 5
+      },
+      {
+        step: 3,
+        text: "Continue cooking and stirring for another 10-12 minutes until the mixture thickens and turns a glossy, deep orange-red color.",
+        text_hi: "मिश्रण के गाढ़े होने और चमकीले गहरे लाल रंग के होने तक 10-12 मिनट और भूनें।",
+        duration: 10
+      },
+      {
+        step: 4,
+        text: "Stir in the cardamom powder and khoya (if using) for 2 minutes until fully blended.",
+        text_hi: "इलायची पाउडर और खोया (यदि उपयोग कर रहे हैं) डालकर 2 मिनट तक अच्छी तरह मिलाएं।",
+        duration: 2
+      },
+      {
+        step: 5,
+        text: "Roast chopped nuts in 1 tsp ghee until golden. Top the halwa with the nuts and serve warm!",
+        text_hi: "काजू-बादाम को घी में भूनकर हलवे पर सजाएं। गर्मागर्म परोसें!",
+        duration: 3
+      }
+    ]
+  },
+  {
+    id: "dessert-rasgulla",
+    title: "Spongy Bengali Rasgulla",
+    description: "Light, spongy, and melt-in-the-mouth cottage cheese (chhena) balls slow-boiled in a fragrant, sweet sugar syrup.",
+    image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/n3H5wO1mpe0",
+    difficulty: "hard",
+    prepTime: 20,
+    cookTime: 25,
+    servings: 5,
+    calories: 220,
+    tags: ["Vegetarian", "Indian", "Dessert", "Sweet"],
+    ingredients: [
+      { name: "Whole Milk", quantity: 4, unit: "cups", alternative: "Skimmed milk for lighter balls" },
+      { name: "Lemon Juice or Vinegar", quantity: 2, unit: "tbsp", alternative: "Citric acid powder" },
+      { name: "Sugar", quantity: 1.5, unit: "cups", alternative: "Light organic sugar" },
+      { name: "Water (for syrup)", quantity: 5, unit: "cups", alternative: "Rose water diluted in water" },
+      { name: "Cardamom Pods (crushed)", quantity: 3, unit: "pcs", alternative: "1 tsp Rose water" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Make Chhena: Boil milk, turn off heat, and add diluted lemon juice gradually until whey separates. Strain in a muslin cloth and rinse with cold water. Hang for 30 minutes to drain.",
+        text_hi: "छेना बनाएं: दूध उबालें, नींबू रस डालकर फाड़ें। कपड़े में छानकर ठंडे पानी से धोएं। 30 मिनट टांग कर रखें।",
+        duration: 15
+      },
+      {
+        step: 2,
+        text: "Knead the chhena with the heel of your palm for 8-10 minutes until it becomes smooth, oil-free, and dough-like.",
+        text_hi: "छेना को हथेली की मदद से 8-10 मिनट तक गूंथें जब तक कि वह चिकना और मावे जैसा न हो जाए।",
+        duration: 10
+      },
+      {
+        step: 3,
+        text: "Divide into equal small portions and roll into smooth balls without any cracks.",
+        text_hi: "बराबर छोटे भागों में बांटकर बिना दरार वाली चिकनी गोलियां बना लें।",
+        duration: 5
+      },
+      {
+        step: 4,
+        text: "Boil sugar, water, and crushed cardamom in a large wide pot. Drop the balls gently into the boiling syrup, cover, and boil on high heat for 15 minutes.",
+        text_hi: "चौड़े बर्तन में चीनी, पानी और इलायची उबालें। उबलती चाशनी में गोलियां डालें, ढककर तेज आंच पर 15 मिनट उबालें।",
+        duration: 15
+      },
+      {
+        step: 5,
+        text: "Turn off heat, let it cool completely. Chilling in the refrigerator for 2 hours makes them extra spongy and sweet.",
+        text_hi: "आंच बंद कर ठंडा करें। फ्रिज में 2 घंटे ठंडा करने के बाद परोसें।",
+        duration: 5
+      }
+    ]
+  },
+  {
+    id: "dessert-kheer",
+    title: "Creamy Saffron Rice Kheer",
+    description: "A comforting, rich Indian rice pudding slow-cooked with basmati rice, full-fat milk, cardamom, saffron, and loaded with roasted dry fruits.",
+    image: "https://images.unsplash.com/photo-1620418029653-a75d5a7d36c1?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/n3H5wO1mpe0",
+    difficulty: "easy",
+    prepTime: 10,
+    cookTime: 30,
+    servings: 4,
+    calories: 290,
+    tags: ["Vegetarian", "Indian", "Dessert", "Sweet", "Gluten-Free"],
+    ingredients: [
+      { name: "Basmati Rice", quantity: 0.25, unit: "cup", alternative: "Jasmine rice" },
+      { name: "Full Fat Milk", quantity: 4, unit: "cups", alternative: "Almond milk + coconut cream" },
+      { name: "Sugar", quantity: 0.5, unit: "cup", alternative: "Condensed milk or Jaggery powder" },
+      { name: "Cardamom Powder", quantity: 0.5, unit: "tsp", alternative: "Cinnamon powder" },
+      { name: "Saffron Strands", quantity: 12, unit: "pcs", alternative: "Vanilla extract" },
+      { name: "Chopped Nuts (Almonds, Pistachios)", quantity: 2, unit: "tbsp", alternative: "Raisins" },
+      { name: "Ghee", quantity: 1, unit: "tsp", alternative: "Oil to roast nuts" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Coarsely crush the soaked rice. Boil milk in a heavy pot, add the crushed rice, and cook on medium-low heat for 20 minutes, stirring frequently until rice is cooked.",
+        text_hi: "भीगे चावल को थोड़ा दरदरा करें। दूध उबालें, चावल डालकर धीमी आंच पर 20 मिनट चलाकर पकाएं।",
+        duration: 20
+      },
+      {
+        step: 2,
+        text: "Mash a few cooked rice grains against the sides of the pot to thicken the milk naturally.",
+        text_hi: "कलछी से थोड़े पके चावल को बर्तन के किनारों पर मैश करें ताकि खीर गाढ़ी हो सके।",
+        duration: 2
+      },
+      {
+        step: 3,
+        text: "Add sugar and saffron milk. Simmer on low heat for 8-10 minutes until the kheer reaches a creamy, semi-thick consistency.",
+        text_hi: "चीनी और केसर का दूध मिलाएं। धीमी आंच पर 8-10 मिनट तक मलाईदार होने तक पकाएं।",
+        duration: 10
+      },
+      {
+        step: 4,
+        text: "Stir in the cardamom powder and half of the chopped nuts. Cook for 1 minute, then turn off the heat.",
+        text_hi: "इलायची पाउडर और आधे मेवे डालकर 1 मिनट पकाएं, फिर आंच बंद करें।",
+        duration: 2
+      },
+      {
+        step: 5,
+        text: "Pour into serving bowls, garnish with remaining nuts, and serve warm or chilled!",
+        text_hi: "कटोरे में निकालें, बचे मेवे से सजाकर गर्म या ठंडा परोसें।",
+        duration: 1
+      }
+    ]
+  },
+  {
+    id: "dessert-rasmalai",
+    title: "Delicate Saffron Rasmalai",
+    description: "Super soft, flattened cottage cheese patties soaked in a chilled, sweet, and thickened milk infused with cardamom, saffron, and pistachios.",
+    image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/n3H5wO1mpe0",
+    difficulty: "hard",
+    prepTime: 25,
+    cookTime: 35,
+    servings: 4,
+    calories: 310,
+    tags: ["Vegetarian", "Indian", "Dessert", "Sweet"],
+    ingredients: [
+      { name: "Rasgulla balls (soft cottage cheese patties)", quantity: 12, unit: "pcs", alternative: "Homemade chhena patties" },
+      { name: "Full Fat Milk (for Rabdi)", quantity: 4, unit: "cups", alternative: "Condensed milk + water" },
+      { name: "Sugar", quantity: 0.5, unit: "cup", alternative: "Organic sugar" },
+      { name: "Saffron Strands", quantity: 15, unit: "pcs", alternative: "Yellow food coloring" },
+      { name: "Cardamom Powder", quantity: 0.5, unit: "tsp", alternative: "Rose water" },
+      { name: "Pistachios & Almonds (slivered)", quantity: 3, unit: "tbsp", alternative: "Cashew bits" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Cook Rabdi: Boil 4 cups of milk in a wide pot. Reduce heat and simmer, scraping cream from sides back into the milk, until it reduces to half its volume (about 25 mins).",
+        text_hi: "रबड़ी बनाएं: दूध उबालें, गाढ़ा होने व आधा रहने तक (25 मिनट) मलाई खुरचते हुए पकाएं।",
+        duration: 25
+      },
+      {
+        step: 2,
+        text: "Add sugar, saffron, and cardamom powder to the reduced milk. Simmer for 3 minutes, then set the hot saffron milk (Ras) aside.",
+        text_hi: "दूध में चीनी, केसर और इलायची पाउडर डालकर 3 मिनट उबालें और अलग रखें।",
+        duration: 3
+      },
+      {
+        step: 3,
+        text: "Take readymade or fresh warm rasgullas. Gently press them between your palms to squeeze out the sugar syrup without breaking them.",
+        text_hi: "रसगुल्लों को हथेलियों के बीच धीरे से दबाकर चाशनी निचोड़ लें (ध्यान रहे वे टूटे नहीं)।",
+        duration: 3
+      },
+      {
+        step: 4,
+        text: "Drop the squeezed patties into the warm rabdi. Simmer on very low heat for 2-3 minutes so they absorb the saffron milk.",
+        text_hi: "दबाए रसगुल्लों को रबड़ी में डालें। धीमी आंच पर 2-3 मिनट पकाएं ताकि वे रस सोख लें।",
+        duration: 3
+      },
+      {
+        step: 5,
+        text: "Turn off heat, garnish with slivered pistachios and almonds. Chill in the refrigerator for at least 4 hours before serving!",
+        text_hi: "पिस्ता और बादाम से सजाएं। फ्रिज में 4 घंटे ठंडा करके परोसें।",
+        duration: 5
+      }
+    ]
+  },
+  {
+    id: "dessert-kaju-katli",
+    title: "Premium Kaju Katli",
+    description: "The classic Indian cashew fudge, thin, smooth, and meltingly soft diamonds decorated with edible silver leaf.",
+    image: "https://images.unsplash.com/photo-1620418029653-a75d5a7d36c1?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/n3H5wO1mpe0",
+    difficulty: "medium",
+    prepTime: 15,
+    cookTime: 15,
+    servings: 6,
+    calories: 260,
+    tags: ["Vegetarian", "Indian", "Dessert", "Sweet", "Gluten-Free"],
+    ingredients: [
+      { name: "Raw Cashews", quantity: 2, unit: "cups", alternative: "Raw almonds (peeled and ground)" },
+      { name: "Sugar", quantity: 1, unit: "cup", alternative: "Maple syrup (will change color)" },
+      { name: "Water", quantity: 0.5, unit: "cup", alternative: "Coconut milk" },
+      { name: "Ghee", quantity: 1, unit: "tbsp", alternative: "Coconut oil or vegan butter" },
+      { name: "Cardamom Powder", quantity: 0.5, unit: "tsp", alternative: "Rose water" },
+      { name: "Edible Silver Leaf (Vark)", quantity: 2, unit: "sheets", alternative: "Grated pistachios" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Grind raw cashews in a blender into a fine dry powder. Sieve the powder to remove any large bits. (Blend in pulses to prevent the cashews from releasing oil and turning into cashew butter).",
+        text_hi: "काजू को बारीक पीस लें और छान लें। ध्यान रहे कि वे तेल न छोड़ें, इसलिए पल्स पर पीसें।",
+        duration: 10
+      },
+      {
+        step: 2,
+        text: "Boil sugar and water in a non-stick pan until the sugar dissolves. Add the cashew powder and cardamom powder. Cook on low heat, stirring constantly.",
+        text_hi: "नॉन-स्टिक पैन में चीनी व पानी उबालें। घुलने पर काजू का पाउडर डालें और धीमी आंच पर लगातार चलाते हुए पकाएं।",
+        duration: 8
+      },
+      {
+        step: 3,
+        text: "Cook for about 8-10 minutes until the mixture forms a soft dough that begins to leave the sides of the pan.",
+        text_hi: "8-10 मिनट तक पकाएं जब तक कि मिश्रण कड़ाही छोड़ने लगे और आटे जैसा गोल हो जाए।",
+        duration: 8
+      },
+      {
+        step: 4,
+        text: "Transfer the dough to a greased parchment paper. Knead it gently for 2 minutes while warm to make it smooth. Place another parchment on top and roll into a 1/4-inch sheet.",
+        text_hi: "घी लगी बटर पेपर पर निकालें, गर्म रहते 2 मिनट गूंथें। ऊपर दूसरा पेपर रख 1/4 इंच मोटा बेल लें।",
+        duration: 5
+      },
+      {
+        step: 5,
+        text: "Apply silver leaf (if using), cool completely, and cut into diamond shapes using a sharp knife. Enjoy!",
+        text_hi: "चांदी का वर्क लगाएं, ठंडा होने दें और चाकू से काजू कतली के आकार (डायमंड) में काट लें।",
+        duration: 5
+      }
+    ]
   }
 ];

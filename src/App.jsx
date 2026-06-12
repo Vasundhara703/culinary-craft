@@ -318,15 +318,15 @@ export default function App() {
       try {
         const parsed = JSON.parse(savedRecipes);
         
-        // Upgrade database to v3 to incorporate Kaggle recipes without losing user edits
-        if (dbVersion !== 'v3') {
-          // Identify which Kaggle recipes are not already in the user's database
+        // Upgrade database to v4 to incorporate new Indian recipes without losing user edits
+        if (dbVersion !== 'v4') {
+          // Identify which default/Kaggle recipes are not already in the user's database
           const existingIds = new Set(parsed.map(r => r.id));
-          const missingKaggle = kaggleRecipes.filter(r => !existingIds.has(r.id));
+          const missingRecipes = [...defaultRecipes, ...kaggleRecipes].filter(r => !existingIds.has(r.id));
           
-          if (missingKaggle.length > 0) {
-            // Append missing Kaggle recipes to the user's existing recipes
-            const merged = [...parsed, ...missingKaggle];
+          if (missingRecipes.length > 0) {
+            // Append missing recipes to the user's existing recipes
+            const merged = [...parsed, ...missingRecipes];
             initialRecipes = merged;
             localStorage.setItem('recipes_db', JSON.stringify(merged));
             const timestamp = Date.now();
@@ -341,7 +341,7 @@ export default function App() {
           } else {
             initialRecipes = parsed;
           }
-          localStorage.setItem('recipes_db_version', 'v3');
+          localStorage.setItem('recipes_db_version', 'v4');
         } else {
           initialRecipes = parsed;
         }
@@ -349,12 +349,12 @@ export default function App() {
         console.error("Failed to parse local recipes database, loading defaults with Kaggle dataset", e);
         initialRecipes = [...defaultRecipes, ...kaggleRecipes];
         localStorage.setItem('recipes_db', JSON.stringify(initialRecipes));
-        localStorage.setItem('recipes_db_version', 'v3');
+        localStorage.setItem('recipes_db_version', 'v4');
         localStorage.setItem('recipes_db_last_updated', '0');
       }
     } else {
       localStorage.setItem('recipes_db', JSON.stringify(initialRecipes));
-      localStorage.setItem('recipes_db_version', 'v3');
+      localStorage.setItem('recipes_db_version', 'v4');
     }
     setRecipes(initialRecipes);
 
@@ -543,7 +543,7 @@ export default function App() {
       const mergedDefaults = [...defaultRecipes, ...kaggleRecipes];
       setRecipes(mergedDefaults);
       localStorage.setItem('recipes_db', JSON.stringify(mergedDefaults));
-      localStorage.setItem('recipes_db_version', 'v3');
+      localStorage.setItem('recipes_db_version', 'v4');
       const timestamp = Date.now();
       localStorage.setItem('recipes_db_last_updated', timestamp.toString());
       uploadToCloud({

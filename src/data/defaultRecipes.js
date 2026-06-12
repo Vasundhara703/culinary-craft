@@ -917,5 +917,240 @@ export const defaultRecipes = [
         duration: 5
       }
     ]
+  },
+  {
+    id: "chilli-paneer",
+    title: "Restaurant Style Chilli Paneer",
+    description: "A popular Indo-Chinese starter where cubes of crisp pan-fried paneer are tossed in a sweet, sour, spicy, and tangy chilli sauce, loaded with crunchy bell peppers and onions.",
+    image: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/Pj1M31B5v64",
+    difficulty: "medium",
+    prepTime: 15,
+    cookTime: 15,
+    servings: 3,
+    calories: 360,
+    tags: ["Vegetarian", "Indo-Chinese", "Paneer", "Spicy", "Starter"],
+    ingredients: [
+      { name: "Paneer (Cottage Cheese)", quantity: 250, unit: "g", alternative: "Firm Tofu blocks (pressed and cubed)" },
+      { name: "Cornstarch", quantity: 3, unit: "tbsp", alternative: "All-purpose flour (Maida) or Arrowroot powder" },
+      { name: "All-purpose Flour (Maida)", quantity: 2, unit: "tbsp", alternative: "Rice flour (for extra crispiness)" },
+      { name: "Soy Sauce", quantity: 2, unit: "tbsp", alternative: "Tamari or Coconut Aminos" },
+      { name: "Chili Sauce (Red or Green)", quantity: 2, unit: "tbsp", alternative: "Sriracha or Schezwan sauce" },
+      { name: "Tomato Ketchup", quantity: 1, unit: "tbsp", alternative: "Tomato paste mixed with 1/2 tsp sugar" },
+      { name: "Garlic (Finely Chopped)", quantity: 6, unit: "cloves", alternative: "1.5 tsp Garlic paste" },
+      { name: "Ginger (Finely Chopped)", quantity: 1, unit: "inch", alternative: "1 tsp Ginger paste" },
+      { name: "Green Bell Pepper (Capsicum, Cubed)", quantity: 1, unit: "cup", alternative: "Red or Yellow Bell Peppers" },
+      { name: "Red Onion (Cubed & Layers Separated)", quantity: 1, unit: "cup", alternative: "White or Yellow onions" },
+      { name: "Green Chillies (Sliced)", quantity: 3, unit: "pcs", alternative: "1/2 tsp dry Red Chili flakes" },
+      { name: "Spring Onion (Chopped)", quantity: 0.25, unit: "cup", alternative: "Fresh Cilantro leaves" },
+      { name: "Black Pepper Powder", quantity: 0.5, unit: "tsp", alternative: "White Pepper powder" },
+      { name: "Cooking Oil", quantity: 3, unit: "tbsp", alternative: "Sesame oil or Butter" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "In a bowl, gently toss paneer cubes with 2 tbsp of cornstarch, flour, black pepper powder, and salt. Sprinkle a tiny bit of water to make the coating stick evenly to the paneer.",
+        text_hi: "एक कटोरे में पनीर के टुकड़ों को 2 बड़े चम्मच कॉर्नस्टार्च, मैदा, काली मिर्च और नमक के साथ मिलाएं। पनीर पर कोटिंग चिपकाने के लिए थोड़ा पानी छिड़कें।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "Heat 2 tbsp oil in a pan over medium heat. Shallow fry paneer cubes until they are light golden and crispy on all sides. Drain and set them aside on a plate.",
+        text_hi: "एक पैन में 2 बड़े चम्मच तेल गर्म करें और पनीर के टुकड़ों को सभी तरफ से सुनहरा और कुरकुरा होने तक हल्का तलें। फिर निकाल कर अलग रख लें।",
+        duration: 7
+      },
+      {
+        step: 3,
+        text: "In the same pan, add the remaining 1 tbsp of oil. Sauté the chopped ginger, garlic, and green chillies on high heat for 1 minute. Add cubed onions and capsicum, sautéing for 2 minutes until they are translucent but still crunchy.",
+        text_hi: "उसी पैन में बचा हुआ 1 बड़ा चम्मच तेल डालें। अदरक, लहसुन और हरी मिर्च को तेज आंच पर 1 मिनट के लिए भूनें। प्याज और शिमला मिर्च डालें और 2 मिनट तक भूनें जब तक वे थोड़े पक जाएं पर क्रंची रहें।",
+        duration: 3
+      },
+      {
+        step: 4,
+        text: "In a small cup, mix soy sauce, chili sauce, ketchup, vinegar, and a pinch of salt. Pour this sauce mix into the pan and stir. Dissolve the remaining 1 tbsp cornstarch in 3 tbsp water to make a slurry and pour it in, cooking for 1 minute until bubbly.",
+        text_hi: "एक छोटे कप में सोया सॉस, चिली सॉस, केचप और सिरका मिलाएं। इसे पैन में डालें और अच्छी तरह चलाएं। बचे हुए 1 चम्मच कॉर्नस्टार्च को 3 चम्मच पानी में घोलकर स्लरी बनाएं और सॉस में डालें, 1 मिनट तक उबलने दें।",
+        duration: 2
+      },
+      {
+        step: 5,
+        text: "Add the fried paneer cubes back to the pan. Toss quickly on high heat for 1-2 minutes until the sauce thickens and glazes the paneer cubes. Garnish with chopped spring onion greens and serve immediately!",
+        text_hi: "तले हुए पनीर के टुकड़े डालें। तेज आंच पर 1-2 मिनट तक चलाएं जब तक कि सॉस गाढ़ा न हो जाए और पनीर पर लिपट न जाए। कटे हुए हरे प्याज से सजाएं और गरमागरम परोसें!",
+        duration: 3
+      }
+    ]
+  },
+  {
+    id: "handi-biryani",
+    title: "Traditional Handi Veg Biryani",
+    description: "An aromatic, layers-packed vegetable biryani slow-cooked in a traditional clay pot (handi) under seal (dum) with basmati rice, mixed vegetables, saffron, and fresh herbs.",
+    image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/jZ_vX8S72fI",
+    difficulty: "hard",
+    prepTime: 25,
+    cookTime: 35,
+    servings: 4,
+    calories: 480,
+    tags: ["Vegetarian", "Rice", "Biryani", "Indian Main", "Claypot Cooking"],
+    ingredients: [
+      { name: "Basmati Rice", quantity: 2, unit: "cups", alternative: "Jasmine rice or Sona Masoori" },
+      { name: "Mixed Vegetables (Carrot, Beans, Peas, Cauliflower)", quantity: 2, unit: "cups", alternative: "Paneer cubes or Tofu" },
+      { name: "Plain Yogurt (Dahi)", quantity: 0.5, unit: "cup", alternative: "Coconut yogurt or Cashew cream" },
+      { name: "Sliced Crispy Fried Onions (Birista)", quantity: 1, unit: "cup", alternative: "Shallots" },
+      { name: "Ginger-Garlic Paste", quantity: 1, unit: "tbsp", alternative: "1 tbsp freshly grated ginger & garlic" },
+      { name: "Biryani Masala Powder", quantity: 1.5, unit: "tbsp", alternative: "Garam masala + ground coriander + ground cumin" },
+      { name: "Saffron Strands", quantity: 10, unit: "pcs", alternative: "A pinch of turmeric powder" },
+      { name: "Ghee (Clarified Butter)", quantity: 3, unit: "tbsp", alternative: "Vegetable oil or Vegan butter" },
+      { name: "Fresh Mint Leaves (Pudina)", quantity: 0.5, unit: "cup", alternative: "Fresh Dill leaves" },
+      { name: "Fresh Cilantro (Dhania)", quantity: 0.5, unit: "cup", alternative: "Fresh Parsley" },
+      { name: "Whole Spices (Cardamom, Cloves, Cinnamon, Bay leaf)", quantity: 1, unit: "tbsp", alternative: "Garam masala powder" },
+      { name: "Warm Milk", quantity: 3, unit: "tbsp", alternative: "Warm water or Almond milk" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Soak the basmati rice for 30 minutes. Boil 6 cups of water with whole spices and salt. Add the rice and cook until 70% done (still has a bite). Drain completely and set aside.",
+        text_hi: "बासमती चावल को 30 मिनट के लिए भिगो दें। 6 कप पानी में साबुत मसालों और नमक के साथ उबालें। चावल डालें और 70% पकने तक पकाएं। पानी को पूरी तरह छान लें और अलग रख दें।",
+        duration: 10
+      },
+      {
+        step: 2,
+        text: "In a mixing bowl, marinate the mixed vegetables with yogurt, ginger-garlic paste, half of the fried onions, biryani masala, chopped mint, cilantro, and salt. Set aside for 15-20 minutes.",
+        text_hi: "एक कटोरे में मिश्रित सब्जियों को दही, अदरक-लहसुन का पेस्ट, आधे तले हुए प्याज, बिरयानी मसाला, पुदीना, धनिया और नमक के साथ मैरीनेट करें। इसे 15-20 मिनट के लिए छोड़ दें।",
+        duration: 15
+      },
+      {
+        step: 3,
+        text: "Heat 2 tbsp ghee in a clay pot (handi) or deep heavy pot. Add the marinated vegetables and cook over medium heat for 8-10 minutes, stirring occasionally until they are partially tender.",
+        text_hi: "हांडी (मिट्टी के बर्तन) में 2 चम्मच घी गर्म करें। मैरीनेट की हुई सब्जियां डालें और मध्यम आंच पर 8-10 मिनट तक पकाएं जब तक कि वे थोड़ी पक जाएं।",
+        duration: 10
+      },
+      {
+        step: 4,
+        text: "Layer the parboiled rice evenly over the vegetable curry base in the pot. Sprinkle the remaining fried onions, saffron dissolved in warm milk, chopped mint, cilantro, and the remaining 1 tbsp ghee on top.",
+        text_hi: "पकी हुई सब्जियों के ऊपर पके हुए चावल की परत लगाएं। ऊपर से बचे हुए तले हुए प्याज, केसर का दूध, कटा हुआ पुदीना, धनिया और बचा हुआ 1 चम्मच घी छिड़कें।",
+        duration: 5
+      },
+      {
+        step: 5,
+        text: "Seal the lid of the clay pot using wheat dough or double layer foil. Slow cook (dum) on very low heat (using a flat pan/tawa underneath the pot to distribute heat) for 20 minutes. Rest for 10 minutes before fluffing and serving with Raita!",
+        text_hi: "हांडी के ढक्कन को गूंथे हुए आटे या एल्यूमीनियम फॉयल से सील करें। धीमी आंच पर (जलने से बचाने के लिए नीचे तवा रखकर) 20 मिनट तक पकाएं (दम दें)। 10 मिनट आराम दें, फिर रायते के साथ परोसें!",
+        duration: 30
+      }
+    ]
+  },
+  {
+    id: "honey-chili-potato",
+    title: "Crispy Honey Chili Potatoes",
+    description: "An addictive Indo-Chinese dish made with crisp, deep-fried french-fried potatoes tossed in a sweet, spicy, and sticky sauce made with honey, chili paste, garlic, and sesame seeds.",
+    image: "https://images.unsplash.com/photo-1518013006308-4178494957e8?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/5aC8qL826w4",
+    difficulty: "medium",
+    prepTime: 20,
+    cookTime: 20,
+    servings: 3,
+    calories: 390,
+    tags: ["Vegetarian", "Potatoes", "Indo-Chinese", "Sweet & Spicy", "Appetizer"],
+    ingredients: [
+      { name: "Potatoes (Cut into thick French Fries)", quantity: 3, unit: "large", alternative: "Sweet potatoes or Cassava strips" },
+      { name: "Cornstarch", quantity: 4, unit: "tbsp", alternative: "All-purpose flour" },
+      { name: "Rice Flour", quantity: 2, unit: "tbsp", alternative: "All-purpose flour" },
+      { name: "Honey", quantity: 2, unit: "tbsp", alternative: "Maple syrup or Agave nectar" },
+      { name: "Chili Sauce (Red or Green)", quantity: 2, unit: "tbsp", alternative: "Sriracha" },
+      { name: "Soy Sauce", quantity: 1, unit: "tbsp", alternative: "Tamari" },
+      { name: "Garlic (Finely Chopped)", quantity: 6, unit: "cloves", alternative: "Garlic paste" },
+      { name: "White Sesame Seeds (Toasted)", quantity: 1, unit: "tbsp", alternative: "Black sesame seeds or chopped peanuts" },
+      { name: "Spring Onion (Chopped)", quantity: 2, unit: "tbsp", alternative: "Fresh coriander" },
+      { name: "Vinegar", quantity: 1, unit: "tsp", alternative: "Lemon juice" },
+      { name: "Cooking Oil", quantity: 1, unit: "cup", alternative: "For deep frying, or cooking spray for air-frying" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Parboil the potato strips in salted boiling water for 5 minutes. Drain completely and pat dry with a clean kitchen towel.",
+        text_hi: "आलू की स्ट्रिप्स को नमकीन पानी में 5 मिनट के लिए उबालें। पूरी तरह से छान लें और किचन टॉवल से सुखाएं।",
+        duration: 10
+      },
+      {
+        step: 2,
+        text: "Toss the potato strips with 3 tbsp cornstarch, rice flour, and salt in a bowl. Shake off any excess. Deep fry in hot oil or air fry at 400°F (200°C) until golden-brown and extremely crispy. Drain on paper towels.",
+        text_hi: "आलू की पट्टियों पर 3 चम्मच कॉर्नस्टार्च, चावल का आटा और नमक छिड़कें। एक्स्ट्रा आटा झाड़ लें। तेल गर्म करके सुनहरा और अत्यंत कुरकुरा होने तक डीप फ्राई या एयर फ्राई करें। पेपर टॉवल पर निकालें।",
+        duration: 15
+      },
+      {
+        step: 3,
+        text: "In another pan, heat 1 tbsp of oil. Sauté the chopped garlic and spring onion whites for 1 minute. Stir in the soy sauce, chili sauce, vinegar, and 2 tbsp water. Let it simmer on low heat.",
+        text_hi: "दूसरे पैन में 1 चम्मच तेल गर्म करें। लहसुन और हरे प्याज के सफेद हिस्से को 1 मिनट के लिए भूनें। सोया सॉस, चिली सॉस, सिरका और 2 चम्मच पानी मिलाएं। धीमी आंच पर उबलने दें।",
+        duration: 3
+      },
+      {
+        step: 4,
+        text: "Make a slurry by mixing the remaining 1 tbsp cornstarch with 2 tbsp water. Pour it into the simmering sauce, stirring until it thickens. Turn off the heat and stir in the honey.",
+        text_hi: "बचे हुए 1 चम्मच कॉर्नस्टार्च और 2 चम्मच पानी के साथ स्लरी बनाएं। इसे सॉस में डालें और गाढ़ा होने तक पकाएं। आंच बंद कर दें और शहद डालकर मिलाएं।",
+        duration: 2
+      },
+      {
+        step: 5,
+        text: "Add the fried crispy potatoes to the sauce. Quickly toss until every potato is coated. Garnish with toasted sesame seeds and spring onion greens. Serve immediately to keep them crispy!",
+        text_hi: "तले हुए कुरकुरे आलू को सॉस में डालें। तुरंत टॉस करें जब तक कि हर आलू पर सॉस की कोटिंग न हो जाए। भुने हुए तिल और हरे प्याज से सजाकर तुरंत परोसें!",
+        duration: 2
+      }
+    ]
+  },
+  {
+    id: "crispy-corn",
+    title: "Spicy Crispy Fried Corn",
+    description: "A bar-style crunchy snack where sweet corn kernels are coated in flour, deep-fried until puffed and crispy, then seasoned with spices, onions, lime juice, and cilantro.",
+    image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&q=80&w=1000",
+    videoUrl: "https://www.youtube.com/embed/MhH5k5hF8-s",
+    difficulty: "easy",
+    prepTime: 10,
+    cookTime: 15,
+    servings: 3,
+    calories: 290,
+    tags: ["Vegetarian", "Corn", "Snacks", "Crispy", "Easy Recipe"],
+    ingredients: [
+      { name: "Sweet Corn Kernels (Fresh or Frozen)", quantity: 2, unit: "cups", alternative: "Canned corn kernels (well drained)" },
+      { name: "Cornstarch", quantity: 3, unit: "tbsp", alternative: "Rice flour" },
+      { name: "Rice Flour", quantity: 2, unit: "tbsp", alternative: "All-purpose flour" },
+      { name: "Chaat Masala", quantity: 1, unit: "tsp", alternative: "Lemon juice + black salt + roasted cumin powder" },
+      { name: "Red Chili Powder", quantity: 1, unit: "tsp", alternative: "Cayenne pepper or paprika" },
+      { name: "Red Onion (Finely Chopped)", quantity: 0.5, unit: "cup", alternative: "Spring onions" },
+      { name: "Fresh Cilantro (Chopped)", quantity: 3, unit: "tbsp", alternative: "Fresh parsley" },
+      { name: "Lime Juice", quantity: 1, unit: "tbsp", alternative: "Dry mango powder (Amchur)" },
+      { name: "Salt", quantity: 0.5, unit: "tsp", alternative: "Black salt (Kala namak)" },
+      { name: "Cooking Oil", quantity: 1, unit: "cup", alternative: "For deep frying, or cooking spray for air-frying" }
+    ],
+    instructions: [
+      {
+        step: 1,
+        text: "Boil sweet corn kernels in salted water for 3-4 minutes. Drain them completely and transfer them to a dry mixing bowl.",
+        text_hi: "यदि ताजे या फ्रोजन कॉर्न का उपयोग कर रहे हैं, तो उन्हें नमकीन पानी में 3-4 मिनट के लिए उबालें। पानी पूरी तरह छान लें और एक कटोरे में निकालें।",
+        duration: 5
+      },
+      {
+        step: 2,
+        text: "Add cornstarch, rice flour, salt, and 1/2 tsp of red chili powder to the warm corn. Toss well so each kernel is coated. If too dry, sprinkle 1 tsp water to help the flour stick.",
+        text_hi: "कॉर्न में कॉर्नस्टार्च, चावल का आटा, नमक और 1/2 छोटा चम्मच मिर्च पाउडर मिलाएं। जब तक प्रत्येक दाने पर अच्छी तरह से कोटिंग न हो जाए, तब तक टॉस करें। यदि बहुत सूखा है तो 1 छोटा चम्मच पानी छिड़कें।",
+        duration: 3
+      },
+      {
+        step: 3,
+        text: "Heat oil in a deep pan. Fry corn in small batches on medium-high heat. Cover the pan partially since corn kernels can pop. Fry until golden-crisp, then drain on paper towels.",
+        text_hi: "एक गहरे पैन में तेल गर्म करें। मध्यम-तेज आंच पर कॉर्न के दानों को छोटे बैचों में तलें। पैन को आंशिक रूप से ढक दें क्योंकि कॉर्न फूट सकते हैं। सुनहरा और कुरकुरा होने तक तलें। पेपर टॉवल पर निकालें।",
+        duration: 7
+      },
+      {
+        step: 4,
+        text: "Transfer the fried corn to a dry bowl. Add the chopped onion, cilantro, chaat masala, remaining 1/2 tsp of red chili powder, and lime juice.",
+        text_hi: "तले हुए कुरकुरे कॉर्न को एक सूखे कटोरे में डालें। कटा हुआ प्याज, धनिया, चाट मसाला, बचा हुआ 1/2 छोटा चम्मच लाल मिर्च पाउडर और नींबू का रस मिलाएं।",
+        duration: 2
+      },
+      {
+        step: 5,
+        text: "Toss everything together quickly so the corn kernels remain crispy. Taste and adjust seasoning, and serve immediately!",
+        text_hi: "सभी चीजों को तुरंत एक साथ टॉस करें ताकि कॉर्न क्रंची बना रहे। आवश्यकतानुसार सीजनिंग को एडजस्ट करें और तुरंत परोसें!",
+        duration: 2
+      }
+    ]
   }
 ];

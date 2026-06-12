@@ -19,6 +19,17 @@ const checkIsLocal = () => {
          hn.endsWith('.local');
 };
 
+const mergeMissingRecipes = (currentRecipes) => {
+  if (!Array.isArray(currentRecipes)) return [];
+  const existingIds = new Set(currentRecipes.map(r => r.id));
+  const missing = [...defaultRecipes, ...kaggleRecipes].filter(r => !existingIds.has(r.id));
+  if (missing.length > 0) {
+    return [...currentRecipes, ...missing];
+  }
+  return currentRecipes;
+};
+
+
 export default function App() {
   // Database States
   const [recipes, setRecipes] = useState([]);
@@ -312,39 +323,14 @@ export default function App() {
     // 2. Recipes Database (Offline-first Load)
     let initialRecipes = [...defaultRecipes, ...kaggleRecipes];
     const savedRecipes = localStorage.getItem('recipes_db');
-    const dbVersion = localStorage.getItem('recipes_db_version');
     
     if (savedRecipes) {
       try {
         const parsed = JSON.parse(savedRecipes);
-        
-        // Upgrade database to v5 to incorporate new Indian recipes without losing user edits
-        if (dbVersion !== 'v5') {
-          // Identify which default/Kaggle recipes are not already in the user's database
-          const existingIds = new Set(parsed.map(r => r.id));
-          const missingRecipes = [...defaultRecipes, ...kaggleRecipes].filter(r => !existingIds.has(r.id));
-          
-          if (missingRecipes.length > 0) {
-            // Append missing recipes to the user's existing recipes
-            const merged = [...parsed, ...missingRecipes];
-            initialRecipes = merged;
-            localStorage.setItem('recipes_db', JSON.stringify(merged));
-            const timestamp = Date.now();
-            localStorage.setItem('recipes_db_last_updated', timestamp.toString());
-            // Proactively upload to cloud to share the merged dataset across other devices (only if admin is authed)
-            if (adminAuthedRef.current) {
-              uploadToCloud({
-                recipes: merged,
-                lastUpdated: timestamp
-              });
-            }
-          } else {
-            initialRecipes = parsed;
-          }
-          localStorage.setItem('recipes_db_version', 'v5');
-        } else {
-          initialRecipes = parsed;
-        }
+        const merged = mergeMissingRecipes(parsed);
+        initialRecipes = merged;
+        localStorage.setItem('recipes_db', JSON.stringify(merged));
+        localStorage.setItem('recipes_db_version', 'v5');
       } catch (e) {
         console.error("Failed to parse local recipes database, loading defaults with Kaggle dataset", e);
         initialRecipes = [...defaultRecipes, ...kaggleRecipes];
@@ -381,8 +367,12 @@ export default function App() {
             cloudLastUpdated = 0;
           }
           
+          // Merge missing default/Kaggle recipes into cloud recipes dynamically
+          cloudRecipes = mergeMissingRecipes(cloudRecipes);
+          
           const localLastUpdated = Number(localStorage.getItem('recipes_db_last_updated')) || 0;
-          const localRecipes = JSON.parse(localStorage.getItem('recipes_db')) || [];
+          let localRecipes = JSON.parse(localStorage.getItem('recipes_db')) || [];
+          localRecipes = mergeMissingRecipes(localRecipes);
           
           if (cloudRecipes.length > 0) {
             if (cloudLastUpdated > localLastUpdated) {
@@ -409,6 +399,8 @@ export default function App() {
               }
             } else {
               // Timestamps are equal, fully synced
+              setRecipes(localRecipes);
+              localStorage.setItem('recipes_db', JSON.stringify(localRecipes));
               setSyncStatus('synced');
             }
           }
@@ -416,7 +408,8 @@ export default function App() {
           // Cloud key does not exist yet. Upload our current state only if admin is authenticated!
           if (adminAuthedRef.current) {
             const localLastUpdated = Number(localStorage.getItem('recipes_db_last_updated')) || 0;
-            const localRecipes = JSON.parse(localStorage.getItem('recipes_db')) || [];
+            let localRecipes = JSON.parse(localStorage.getItem('recipes_db')) || [];
+            localRecipes = mergeMissingRecipes(localRecipes);
             await uploadToCloud({
               recipes: localRecipes,
               lastUpdated: localLastUpdated
@@ -610,8 +603,14 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Extract all unique tags across recipes for the sidebar filters
-  const allTags = ['All', ...new Set(recipes.flatMap(r => r.tags || []))];
+  // Extract all unique tags across recipes for the sidebar filters, prioritizing key categories
+  const priorityTags = ['Breakfast', 'Starter', 'Dessert', 'Vegetarian', 'Indian', 'Spicy', 'Indo-Chinese'];
+  const rawTags = [...new Set(recipes.flatMap(r => r.tags || []))];
+  const allTags = [
+    'All',
+    ...priorityTags.filter(t => rawTags.includes(t)),
+    ...rawTags.filter(t => !priorityTags.includes(t))
+  ];
 
   // Filtering Logic
   const filteredRecipes = recipes.filter(recipe => {

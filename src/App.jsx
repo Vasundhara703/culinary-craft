@@ -58,6 +58,9 @@ export default function App() {
   // Creator Card Slide State
   const [creatorSlide, setCreatorSlide] = useState(0);
 
+  // Hero Carousel Slider State
+  const [activeSlide, setActiveSlide] = useState(0);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCreatorSlide(prev => (prev === 0 ? 1 : 0));
@@ -636,6 +639,13 @@ export default function App() {
     return matchesSearch && matchesTag && matchesDifficulty && matchesTime && matchesHealth;
   });
 
+  const featuredIds = ['tuscan-chicken', 'palak-paneer', 'chilli-paneer', 'avocado-pesto-pasta', 'chocolate-mousse'];
+  const sliderRecipes = (recipes.length > 0 ? recipes : defaultRecipes).filter(r => featuredIds.includes(r.id)).slice(0, 5);
+  const finalSliderRecipes = sliderRecipes.length > 0 ? sliderRecipes : (recipes.length > 0 ? recipes : defaultRecipes).slice(0, 5);
+  const activeRecipe = finalSliderRecipes[activeSlide] || finalSliderRecipes[0];
+  const orbitAngles = [260, 225, 180, 135, 100];
+  const DEFAULT_RECIPE_IMAGE = "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1000";
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header 
@@ -653,109 +663,200 @@ export default function App() {
       <main style={{ flexGrow: 1 }}>
         {currentView === 'home' && (
           <>
-            {/* Hero Section */}
-            <section className="hero-section">
-              <div className="container">
-                <span className="hero-subtitle">Taste the Craft</span>
-                <h1 className="hero-title serif-title">
-                  Discover, Personalize, and Cook <br />
-                  <span className="serif-italic" style={{ color: 'var(--accent-primary)' }}>Exceptional Recipes</span>
-                </h1>
-                <p className="hero-description">
-                  A curated space for culinary explorers. Scale servings instantly, swap ingredients easily, and master cooking with guided timers.
-                </p>
+            {/* Hero Slider Section */}
+            <section className="hero-slider-section">
+              {/* Floating Leaf Micro-Animations */}
+              <svg className="floating-leaf leaf-1" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
+                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
+                <path d="M12 16L2 22" />
+              </svg>
+              <svg className="floating-leaf leaf-2" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
+                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
+                <path d="M12 16L2 22" />
+              </svg>
+              <svg className="floating-leaf leaf-3" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
+                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
+                <path d="M12 16L2 22" />
+              </svg>
+              <svg className="floating-leaf leaf-4" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
+                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
+                <path d="M12 16L2 22" />
+              </svg>
 
-                {/* Search & Filters Panel */}
-                <div className="filter-dashboard">
-                  <div className="search-box">
-                    <Search className="search-icon-left" size={22} />
+              <div className="container">
+                <div className="hero-slider-grid">
+                  {/* Left Column: Content */}
+                  <div className="hero-slider-content">
+                    <span className="hero-badge">Featured Recipe</span>
+                    <h1 className="hero-title">
+                      {activeRecipe?.title.split(' ').slice(0, -2).join(' ')}{' '}
+                      <span className="highlight-red">
+                        {activeRecipe?.title.split(' ').slice(-2).join(' ')}
+                      </span>
+                    </h1>
+                    <p className="hero-description">
+                      {activeRecipe?.description}
+                    </p>
+
+                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                      <button 
+                        className="btn-hero-order"
+                        onClick={() => handleOpenDetail(activeRecipe, 'home')}
+                      >
+                        Explore Recipe
+                      </button>
+
+                      {/* Slider Navigation */}
+                      <div className="hero-slider-navigation">
+                        <span 
+                          className="hero-nav-arrow" 
+                          onClick={() => setActiveSlide(prev => (prev === 0 ? finalSliderRecipes.length - 1 : prev - 1))}
+                        >
+                          ← Previous
+                        </span>
+                        <span>|</span>
+                        <span 
+                          className="hero-nav-arrow" 
+                          onClick={() => setActiveSlide(prev => (prev === finalSliderRecipes.length - 1 ? 0 : prev + 1))}
+                        >
+                          Next →
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Circular Visual & Orbit */}
+                  <div className="hero-slider-visual">
+                    <div className="orbit-container">
+                      {/* Main Plate */}
+                      <div 
+                        className="main-plate-wrapper"
+                        style={{ transform: `rotate(${activeSlide * 72}deg)` }}
+                      >
+                        <img 
+                          src={activeRecipe?.image || DEFAULT_RECIPE_IMAGE} 
+                          className="main-plate-img" 
+                          alt={activeRecipe?.title} 
+                          style={{ transform: `rotate(-${activeSlide * 72}deg)` }}
+                        />
+                      </div>
+
+                      {/* Orbiting Thumbnails */}
+                      {finalSliderRecipes.map((slide, idx) => {
+                        const angle = orbitAngles[idx];
+                        const rad = (angle * Math.PI) / 180;
+                        const left = 50 + 45 * Math.cos(rad);
+                        const top = 50 + 45 * Math.sin(rad);
+
+                        return (
+                          <div 
+                            key={slide.id}
+                            className={`orbit-thumbnail ${activeSlide === idx ? 'active' : ''}`}
+                            style={{ left: `${left}%`, top: `${top}%` }}
+                            onClick={() => setActiveSlide(idx)}
+                            title={slide.title}
+                          >
+                            <img src={slide.image || DEFAULT_RECIPE_IMAGE} alt={slide.title} />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Search & Filters Section */}
+            <section className="filter-section container" style={{ marginTop: '60px' }}>
+              <div className="filter-dashboard">
+                <div className="search-box">
+                  <Search className="search-icon-left" size={22} />
+                  <input 
+                    type="text" 
+                    className="search-input" 
+                    placeholder="Search recipes, keywords, or ingredients (e.g. spinach)..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+
+                {/* Category Filter row */}
+                <div className="categories-bar">
+                  {allTags.slice(0, 16).map((tag, idx) => (
+                    <button
+                      key={idx}
+                      className={`btn-filter ${selectedTag === tag ? 'active' : ''}`}
+                      onClick={() => setSelectedTag(tag)}
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Sub Filters Row */}
+                <div className="filter-expand-row">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Difficulty:</span>
+                    <select 
+                      className="filter-select"
+                      value={selectedDifficulty}
+                      onChange={(e) => setSelectedDifficulty(e.target.value)}
+                    >
+                      <option value="All">All Levels</option>
+                      <option value="Easy">Easy</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Hard">Hard</option>
+                    </select>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Clock size={16} style={{ color: 'var(--text-muted)' }} />
+                    <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+                      Max Time: <strong style={{ color: 'var(--accent-primary)' }}>{maxTime} mins</strong>
+                    </span>
                     <input 
-                      type="text" 
-                      className="search-input" 
-                      placeholder="Search recipes, keywords, or ingredients (e.g. spinach)..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      type="range" 
+                      min="15" 
+                      max="180" 
+                      step="5"
+                      value={maxTime} 
+                      onChange={(e) => setMaxTime(Number(e.target.value))} 
+                      style={{ cursor: 'pointer', accentColor: 'var(--accent-primary)' }}
                     />
                   </div>
+                </div>
 
-                  {/* Category Filter row */}
-                  <div className="categories-bar">
-                    {allTags.slice(0, 16).map((tag, idx) => (
+                {/* Health & Care Specialized Dietary Filters */}
+                <div className="health-profiles-section" style={{ borderTop: '1px dashed var(--border-color)', paddingTop: '16px', marginTop: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                    <span className="health-filter-title" style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)' }}>
+                      🩺 Specialized Health Care:
+                    </span>
+                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                      Filter dishes suited for specific medical & recovery needs
+                    </span>
+                  </div>
+                  <div className="categories-bar" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    {healthProfilesList.map((profile) => (
                       <button
-                        key={idx}
-                        className={`btn-filter ${selectedTag === tag ? 'active' : ''}`}
-                        onClick={() => setSelectedTag(tag)}
+                        key={profile.id}
+                        type="button"
+                        className={`btn-filter ${selectedHealthProfile === profile.id ? 'active' : ''}`}
+                        style={{ 
+                          fontSize: '12px', 
+                          padding: '6px 12px', 
+                          marginTop: 0,
+                          borderColor: selectedHealthProfile === profile.id ? 'var(--accent-cool)' : 'var(--border-color)',
+                          color: selectedHealthProfile === profile.id ? '#fff' : 'var(--text-primary)',
+                          backgroundColor: selectedHealthProfile === profile.id ? 'var(--accent-cool)' : 'transparent'
+                        }}
+                        onClick={() => setSelectedHealthProfile(profile.id)}
+                        title={profile.tooltip}
                       >
-                        {tag}
+                        <span style={{ marginRight: '6px' }}>{profile.emoji}</span>
+                        {profile.label}
                       </button>
                     ))}
-                  </div>
-
-                  {/* Sub Filters Row */}
-                  <div className="filter-expand-row">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>Difficulty:</span>
-                      <select 
-                        className="filter-select"
-                        value={selectedDifficulty}
-                        onChange={(e) => setSelectedDifficulty(e.target.value)}
-                      >
-                        <option value="All">All Levels</option>
-                        <option value="Easy">Easy</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Hard">Hard</option>
-                      </select>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Clock size={16} style={{ color: 'var(--text-muted)' }} />
-                      <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                        Max Time: <strong style={{ color: 'var(--accent-primary)' }}>{maxTime} mins</strong>
-                      </span>
-                      <input 
-                        type="range" 
-                        min="15" 
-                        max="180" 
-                        step="5"
-                        value={maxTime} 
-                        onChange={(e) => setMaxTime(Number(e.target.value))} 
-                        style={{ cursor: 'pointer', accentColor: 'var(--accent-primary)' }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Health & Care Specialized Dietary Filters */}
-                  <div className="health-profiles-section" style={{ borderTop: '1px dashed var(--border-color)', paddingTop: '16px', marginTop: '16px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
-                      <span className="health-filter-title" style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                        🩺 Specialized Health Care:
-                      </span>
-                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                        Filter dishes suited for specific medical & recovery needs
-                      </span>
-                    </div>
-                    <div className="categories-bar" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                      {healthProfilesList.map((profile) => (
-                        <button
-                          key={profile.id}
-                          type="button"
-                          className={`btn-filter ${selectedHealthProfile === profile.id ? 'active' : ''}`}
-                          style={{ 
-                            fontSize: '12px', 
-                            padding: '6px 12px', 
-                            marginTop: 0,
-                            borderColor: selectedHealthProfile === profile.id ? 'var(--accent-cool)' : 'var(--border-color)',
-                            color: selectedHealthProfile === profile.id ? '#fff' : 'var(--text-primary)',
-                            backgroundColor: selectedHealthProfile === profile.id ? 'var(--accent-cool)' : 'transparent'
-                          }}
-                          onClick={() => setSelectedHealthProfile(profile.id)}
-                          title={profile.tooltip}
-                        >
-                          <span style={{ marginRight: '6px' }}>{profile.emoji}</span>
-                          {profile.label}
-                        </button>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -763,11 +864,13 @@ export default function App() {
 
             {/* Recipes Grid */}
             <section className="recipes-grid-section container">
-              <div className="grid-header">
-                <div className="grid-title-info">
-                  Gourmet Collection
-                  <span className="grid-title-count">({filteredRecipes.length} recipes found)</span>
-                </div>
+              <div className="grid-header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '40px' }}>
+                <h2 className="serif-title" style={{ fontSize: '36px', color: 'var(--text-primary)', margin: 0 }}>
+                  Our <span style={{ color: 'var(--accent-red)' }}>Popular</span> Menu
+                </h2>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '14.5px', marginTop: '6px' }}>
+                  Discover our best-selling recipes, crafted with the freshest ingredients and balanced flavors ({filteredRecipes.length} recipes found).
+                </p>
               </div>
 
               {filteredRecipes.length === 0 ? (
@@ -794,76 +897,145 @@ export default function App() {
 
         {currentView === 'landing' && (
           <>
-            {/* Landing Hero / About Section */}
-            <section className="landing-hero" id="about">
+            {/* Hero Slider Section */}
+            <section className="hero-slider-section" id="about">
+              {/* Floating Leaf Micro-Animations */}
+              <svg className="floating-leaf leaf-1" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
+                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
+                <path d="M12 16L2 22" />
+              </svg>
+              <svg className="floating-leaf leaf-2" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
+                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
+                <path d="M12 16L2 22" />
+              </svg>
+              <svg className="floating-leaf leaf-3" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
+                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
+                <path d="M12 16L2 22" />
+              </svg>
+              <svg className="floating-leaf leaf-4" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
+                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
+                <path d="M12 16L2 22" />
+              </svg>
+
               <div className="container">
-                <div className="hero-glass-card animate-fade-in">
-                  <span className="hero-subtitle">Welcome to Culinary Craft</span>
-                  <h1 className="hero-title serif-title">
-                    The Art of Cooking, <br />
-                    <span className="serif-italic" style={{ color: 'var(--accent-primary)' }}>Personalized For You</span>
-                  </h1>
-                  <p className="hero-description" style={{ margin: '0 auto 24px auto' }}>
-                    Discover exquisite recipes, dynamically adjust serving sizes, check alternative ingredients to match your dietary profile, and cook hands-free with guided voice timers and multilingual instructions.
-                  </p>
-                  <div style={{ marginTop: '24px' }}>
-                    <a 
-                      href="#login" 
-                      className="btn-pantry-check" 
-                      style={{ 
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        padding: '12px 32px',
-                        fontSize: '15px',
-                        fontWeight: '600',
-                        textDecoration: 'none',
-                        borderRadius: 'var(--radius-full)',
-                        boxShadow: '0 4px 12px rgba(var(--accent-primary-rgb), 0.25)',
-                        transition: 'transform 0.2s ease, box-shadow 0.2s ease'
-                      }}
-                    >
-                      Get Started
-                    </a>
-                  </div>
-                </div>
+                <div className="hero-slider-grid">
+                  {/* Left Column: Content */}
+                  <div className="hero-slider-content">
+                    <span className="hero-badge">Welcome to Culinary Craft</span>
+                    <h1 className="hero-title">
+                      Fuel Your Body with{' '}
+                      <span className="highlight-red">
+                        Nutrient-Rich Recipes
+                      </span>
+                    </h1>
+                    <p className="hero-description">
+                      Discover exquisite recipes, dynamically adjust serving sizes, check alternative ingredients, and cook hands-free with guided voice timers and multilingual instructions.
+                    </p>
 
-                {/* Highlights Grid */}
-                <div className="about-features-container">
-                  <div className="about-feature-card">
-                    <div className="about-feature-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-scale"><path d="m16 16 3-8 3 8c-.87.65-2.24.75-3 .75s-2.13-.1-3-.75Z"/><path d="m2 16 3-8 3 8c-.87.65-2.24.75-3 .75s-2.13-.1-3-.75Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>
+                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                      <a 
+                        href="#login" 
+                        className="btn-hero-order"
+                        style={{ textDecoration: 'none' }}
+                      >
+                        Get Started
+                      </a>
+
+                      {/* Slider Navigation */}
+                      <div className="hero-slider-navigation">
+                        <span 
+                          className="hero-nav-arrow" 
+                          onClick={() => setActiveSlide(prev => (prev === 0 ? finalSliderRecipes.length - 1 : prev - 1))}
+                        >
+                          ← Previous
+                        </span>
+                        <span>|</span>
+                        <span 
+                          className="hero-nav-arrow" 
+                          onClick={() => setActiveSlide(prev => (prev === finalSliderRecipes.length - 1 ? 0 : prev + 1))}
+                        >
+                          Next →
+                        </span>
+                      </div>
                     </div>
-                    <h3 className="about-feature-title">Dynamic Scaling</h3>
-                    <p className="about-feature-desc">Scale serving sizes instantly. Ingredient quantities automatically adjust in real-time with decimal precision.</p>
-                  </div>
-                  
-                  <div className="about-feature-card">
-                    <div className="about-feature-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-timer"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="12" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg>
-                    </div>
-                    <h3 className="about-feature-title">Smart Step Timers</h3>
-                    <p className="about-feature-desc">Interactive timers integrated directly into cooking steps, complete with voice countdown narration alerts.</p>
-                  </div>
-                  
-                  <div className="about-feature-card">
-                    <div className="about-feature-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                    </div>
-                    <h3 className="about-feature-title">Voice & Guided AI</h3>
-                    <p className="about-feature-desc">Hands-free guided cooking mode with full text-to-speech support and interactive AI Chef chat rescue tips.</p>
                   </div>
 
-                  <div className="about-feature-card">
-                    <div className="about-feature-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                  {/* Right Column: Circular Visual & Orbit */}
+                  <div className="hero-slider-visual">
+                    <div className="orbit-container">
+                      {/* Main Plate */}
+                      <div 
+                        className="main-plate-wrapper"
+                        style={{ transform: `rotate(${activeSlide * 72}deg)` }}
+                      >
+                        <img 
+                          src={activeRecipe?.image || DEFAULT_RECIPE_IMAGE} 
+                          className="main-plate-img" 
+                          alt={activeRecipe?.title} 
+                          style={{ transform: `rotate(-${activeSlide * 72}deg)` }}
+                        />
+                      </div>
+
+                      {/* Orbiting Thumbnails */}
+                      {finalSliderRecipes.map((slide, idx) => {
+                        const angle = orbitAngles[idx];
+                        const rad = (angle * Math.PI) / 180;
+                        const left = 50 + 45 * Math.cos(rad);
+                        const top = 50 + 45 * Math.sin(rad);
+
+                        return (
+                          <div 
+                            key={slide.id}
+                            className={`orbit-thumbnail ${activeSlide === idx ? 'active' : ''}`}
+                            style={{ left: `${left}%`, top: `${top}%` }}
+                            onClick={() => setActiveSlide(idx)}
+                            title={slide.title}
+                          >
+                            <img src={slide.image || DEFAULT_RECIPE_IMAGE} alt={slide.title} />
+                          </div>
+                        );
+                      })}
                     </div>
-                    <h3 className="about-feature-title">Bilingual Support</h3>
-                    <p className="about-feature-desc">Translate instructions instantly between English and Hindi, with native accent voice synthesis for both.</p>
                   </div>
                 </div>
               </div>
             </section>
+            {/* Highlights Grid */}
+            <div className="container" style={{ marginTop: '40px' }}>
+              <div className="about-features-container">
+                <div className="about-feature-card">
+                  <div className="about-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-scale"><path d="m16 16 3-8 3 8c-.87.65-2.24.75-3 .75s-2.13-.1-3-.75Z"/><path d="m2 16 3-8 3 8c-.87.65-2.24.75-3 .75s-2.13-.1-3-.75Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>
+                  </div>
+                  <h3 className="about-feature-title">Dynamic Scaling</h3>
+                  <p className="about-feature-desc">Scale serving sizes instantly. Ingredient quantities automatically adjust in real-time with decimal precision.</p>
+                </div>
+                
+                <div className="about-feature-card">
+                  <div className="about-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-timer"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="12" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg>
+                  </div>
+                  <h3 className="about-feature-title">Smart Step Timers</h3>
+                  <p className="about-feature-desc">Interactive timers integrated directly into cooking steps, complete with voice countdown narration alerts.</p>
+                </div>
+                
+                <div className="about-feature-card">
+                  <div className="about-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                  </div>
+                  <h3 className="about-feature-title">Voice & Guided AI</h3>
+                  <p className="about-feature-desc">Hands-free guided cooking mode with full text-to-speech support and interactive AI Chef chat rescue tips.</p>
+                </div>
+
+                <div className="about-feature-card">
+                  <div className="about-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                  </div>
+                  <h3 className="about-feature-title">Bilingual Support</h3>
+                  <p className="about-feature-desc">Translate instructions instantly between English and Hindi, with native accent voice synthesis for both.</p>
+                </div>
+              </div>
+            </div>
 
             {/* The primary founder profile is rendered side-by-side with the feedback form in the section below */}
 
@@ -1422,72 +1594,112 @@ export default function App() {
       />
 
       {/* Footer */}
-      <footer className="app-footer" style={{ padding: '48px 0', borderTop: '1px solid var(--border-color)', background: 'var(--bg-secondary)', width: '100%' }}>
-        <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px', textAlign: 'center' }}>
-          <a 
-            href="#" 
-            className="logo-group" 
-            onClick={(e) => { 
-              e.preventDefault(); 
-              if (isUserAuthenticated || isAdminAuthenticated) {
-                setView('home'); 
-              } else {
-                setView('landing'); 
-              }
-            }}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
-          >
-            <img 
-              src="/logo.png" 
-              alt="Culinary Craft Logo" 
-              style={{ 
-                height: '64px', 
-                width: '64px', 
-                objectFit: 'cover', 
-                borderRadius: '50%',
-                border: '2px solid var(--accent-primary)',
-                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
-                transition: 'transform 0.3s ease'
-              }}
-              className="logo-img-hover"
-            />
-            <span className="serif-title" style={{ fontSize: '20px', color: 'var(--text-primary)', marginTop: '4px' }}>
-              Culinary<span className="serif-italic" style={{ color: 'var(--accent-primary)', marginLeft: '4px' }}>Craft</span>
-            </span>
-          </a>
-          
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-            <a 
-              href="https://www.instagram.com/vasundhara_mishra_/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="footer-social-link"
-              title="Instagram"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-instagram">
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-              </svg>
-            </a>
-            <a 
-              href="https://www.linkedin.com/in/vasundhara-mishra-1914093a3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="footer-social-link"
-              title="LinkedIn"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-linkedin">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                <rect width="4" height="12" x="2" y="9"/>
-                <circle cx="4" cy="4" r="2"/>
-              </svg>
-            </a>
+      <footer className="app-footer">
+        <div className="container">
+          <div className="footer-content">
+            {/* Col 1: About */}
+            <div className="footer-col">
+              <a 
+                href="#" 
+                className="logo-group" 
+                onClick={(e) => { 
+                  e.preventDefault(); 
+                  if (isUserAuthenticated || isAdminAuthenticated) {
+                    setView('home'); 
+                  } else {
+                    setView('landing'); 
+                  }
+                }}
+                style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
+              >
+                <img 
+                  src="/logo.png" 
+                  alt="Culinary Craft Logo" 
+                  style={{ 
+                    height: '42px', 
+                    width: '42px', 
+                    objectFit: 'cover', 
+                    borderRadius: '50%',
+                    border: '2px solid #111827',
+                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)'
+                  }}
+                />
+                <span className="serif-title" style={{ fontSize: '18px', color: '#111827', fontWeight: 800 }}>
+                  Culinary<span style={{ color: 'var(--accent-red)' }}>Craft</span>
+                </span>
+              </a>
+              <p className="footer-text" style={{ marginTop: '12px' }}>
+                Discover exquisite recipes, dynamically adjust serving sizes, check alternative ingredients, and cook hands-free with guided voice timers.
+              </p>
+            </div>
+
+            {/* Col 2: Opening Hours */}
+            <div className="footer-col">
+              <h4 className="footer-col-title">Opening Hours</h4>
+              <p className="footer-text">
+                Mon - Fri: 11:00 AM - 11:00 PM <br />
+                Sat - Sun: 12:00 PM - 12:00 AM
+              </p>
+            </div>
+
+            {/* Col 3: Quick Links */}
+            <div className="footer-col">
+              <h4 className="footer-col-title">Quick Links</h4>
+              <div className="footer-links-list">
+                <a href="#about" className="footer-link-item" onClick={() => { setView('landing'); }}>Home</a>
+                <a href="#founder" className="footer-link-item" onClick={() => { setView('landing'); }}>About Us</a>
+                <a href="#blogs" className="footer-link-item" onClick={() => { setView('landing'); }}>Chefs' Blogs</a>
+                <a href="#feedback" className="footer-link-item" onClick={() => { setView('landing'); }}>Feedback</a>
+              </div>
+            </div>
+
+            {/* Col 4: Contact / Social */}
+            <div className="footer-col">
+              <h4 className="footer-col-title">Social Media</h4>
+              <p className="footer-text" style={{ marginBottom: '8px' }}>
+                Follow us for daily updates & recipes!
+              </p>
+              <div className="footer-social-row">
+                <a 
+                  href="https://www.instagram.com/vasundhara_mishra_/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="footer-social-btn"
+                  title="Instagram"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                  </svg>
+                </a>
+                <a 
+                  href="https://www.linkedin.com/in/vasundhara-mishra-1914093a3" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="footer-social-btn"
+                  title="LinkedIn"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect width="4" height="12" x="2" y="9"/>
+                    <circle cx="4" cy="4" r="2"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
 
-          <p style={{ width: '100%', borderTop: '1px solid var(--border-color)', paddingTop: '20px', marginTop: '8px', color: 'var(--text-muted)', fontSize: '13px', textAlign: 'center', fontWeight: '500', maxWidth: '600px' }}>
-            &copy; {new Date().getFullYear()} Culinary Craft. Designed &amp; Developed with passion by Vasundhara Mishra.
-          </p>
+          <div className="footer-bottom">
+            <div>
+              &copy; {new Date().getFullYear()} Designed &amp; Developed with passion by Vasundhara Mishra. All rights reserved.
+            </div>
+            <div className="footer-bottom-links">
+              <a href="#" className="footer-bottom-link" onClick={(e) => e.preventDefault()}>Terms of Use</a>
+              <a href="#" className="footer-bottom-link" onClick={(e) => e.preventDefault()}>Privacy Policy</a>
+              <a href="#" className="footer-bottom-link" onClick={(e) => e.preventDefault()}>Cookie Settings</a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

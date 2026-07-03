@@ -45,7 +45,7 @@ export default function Header({
             className="logo-img-hover"
           />
           <span className="logo-text serif-title">
-            Culinary<span className="serif-italic" style={{ color: 'var(--accent-primary)', marginLeft: '4px' }}>Craft</span>
+            Culinary<span className="serif-italic" style={{ color: 'var(--accent-red)', marginLeft: '4px' }}>Craft</span>
           </span>
         </a>
 

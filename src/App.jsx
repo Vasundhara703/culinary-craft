@@ -741,25 +741,27 @@ export default function App() {
                         />
                       </div>
 
-                      {/* Orbiting Thumbnails */}
-                      {finalSliderRecipes.map((slide, idx) => {
-                        const angle = orbitAngles[idx];
-                        const rad = (angle * Math.PI) / 180;
-                        const left = 50 + 45 * Math.cos(rad);
-                        const top = 50 + 45 * Math.sin(rad);
+                      {/* Orbiting Thumbnails wrapped in revolving ring */}
+                      <div className="orbit-revolving-ring">
+                        {finalSliderRecipes.map((slide, idx) => {
+                          const angle = orbitAngles[idx];
+                          const rad = (angle * Math.PI) / 180;
+                          const left = 50 + 45 * Math.cos(rad);
+                          const top = 50 + 45 * Math.sin(rad);
 
-                        return (
-                          <div 
-                            key={slide.id}
-                            className={`orbit-thumbnail ${activeSlide === idx ? 'active' : ''}`}
-                            style={{ left: `${left}%`, top: `${top}%` }}
-                            onClick={() => setActiveSlide(idx)}
-                            title={slide.title}
-                          >
-                            <img src={slide.image || DEFAULT_RECIPE_IMAGE} alt={slide.title} />
-                          </div>
-                        );
-                      })}
+                          return (
+                            <div 
+                              key={slide.id}
+                              className={`orbit-thumbnail ${activeSlide === idx ? 'active' : ''}`}
+                              style={{ left: `${left}%`, top: `${top}%` }}
+                              onClick={() => setActiveSlide(idx)}
+                              title={slide.title}
+                            >
+                              <img src={slide.image || DEFAULT_RECIPE_IMAGE} alt={slide.title} />
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -882,11 +884,12 @@ export default function App() {
                 </div>
               ) : (
                 <div className="recipes-grid">
-                  {filteredRecipes.map((recipe) => (
+                  {filteredRecipes.map((recipe, idx) => (
                     <RecipeCard 
                       key={recipe.id} 
                       recipe={recipe} 
                       onClick={() => handleOpenDetail(recipe, 'home')}
+                      style={{ animationDelay: `${(idx % 12) * 0.05}s` }}
                     />
                   ))}
                 </div>
@@ -933,14 +936,6 @@ export default function App() {
                     </p>
 
                     <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                      <a 
-                        href="#login" 
-                        className="btn-hero-order"
-                        style={{ textDecoration: 'none' }}
-                      >
-                        Get Started
-                      </a>
-
                       {/* Slider Navigation */}
                       <div className="hero-slider-navigation">
                         <span 
@@ -976,25 +971,27 @@ export default function App() {
                         />
                       </div>
 
-                      {/* Orbiting Thumbnails */}
-                      {finalSliderRecipes.map((slide, idx) => {
-                        const angle = orbitAngles[idx];
-                        const rad = (angle * Math.PI) / 180;
-                        const left = 50 + 45 * Math.cos(rad);
-                        const top = 50 + 45 * Math.sin(rad);
+                      {/* Orbiting Thumbnails wrapped in revolving ring */}
+                      <div className="orbit-revolving-ring">
+                        {finalSliderRecipes.map((slide, idx) => {
+                          const angle = orbitAngles[idx];
+                          const rad = (angle * Math.PI) / 180;
+                          const left = 50 + 45 * Math.cos(rad);
+                          const top = 50 + 45 * Math.sin(rad);
 
-                        return (
-                          <div 
-                            key={slide.id}
-                            className={`orbit-thumbnail ${activeSlide === idx ? 'active' : ''}`}
-                            style={{ left: `${left}%`, top: `${top}%` }}
-                            onClick={() => setActiveSlide(idx)}
-                            title={slide.title}
-                          >
-                            <img src={slide.image || DEFAULT_RECIPE_IMAGE} alt={slide.title} />
-                          </div>
-                        );
-                      })}
+                          return (
+                            <div 
+                              key={slide.id}
+                              className={`orbit-thumbnail ${activeSlide === idx ? 'active' : ''}`}
+                              style={{ left: `${left}%`, top: `${top}%` }}
+                              onClick={() => setActiveSlide(idx)}
+                              title={slide.title}
+                            >
+                              <img src={slide.image || DEFAULT_RECIPE_IMAGE} alt={slide.title} />
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1633,14 +1630,6 @@ export default function App() {
               </p>
             </div>
 
-            {/* Col 2: Opening Hours */}
-            <div className="footer-col">
-              <h4 className="footer-col-title">Opening Hours</h4>
-              <p className="footer-text">
-                Mon - Fri: 11:00 AM - 11:00 PM <br />
-                Sat - Sun: 12:00 PM - 12:00 AM
-              </p>
-            </div>
 
             {/* Col 3: Quick Links */}
             <div className="footer-col">

@@ -2649,6 +2649,18 @@ html {
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Solar revolution container wrapper */
+.orbit-revolving-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  animation: solar-revolution 35s linear infinite;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
 /* Orbiting thumbnails */
 .orbit-thumbnail {
   position: absolute;
@@ -2662,6 +2674,7 @@ html {
   transform: translate(-50%, -50%);
   overflow: hidden;
   z-index: 10;
+  pointer-events: auto; /* enable click on child thumbnails */
 }
 
 .orbit-thumbnail img {
@@ -2669,6 +2682,25 @@ html {
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  animation: solar-revolution-counter 35s linear infinite;
+}
+
+@keyframes solar-revolution {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes solar-revolution-counter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
 .orbit-thumbnail:hover img {
@@ -2774,7 +2806,22 @@ html {
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.recipe-card.animate-fade-in {
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .recipe-card:hover {

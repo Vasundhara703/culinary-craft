@@ -2,7 +2,7 @@ import React from 'react';
 
 const DEFAULT_RECIPE_IMAGE = "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1000";
 
-export default function RecipeCard({ recipe, onClick }) {
+export default function RecipeCard({ recipe, onClick, style }) {
   const { title, description, image, difficulty, prepTime, cookTime, servings, calories, tags } = recipe;
   const totalTime = prepTime + cookTime;
   const [imgSrc, setImgSrc] = React.useState(image || DEFAULT_RECIPE_IMAGE);
@@ -15,7 +15,7 @@ export default function RecipeCard({ recipe, onClick }) {
   const rating = ((title.length % 7) * 0.1 + 4.3).toFixed(1);
 
   return (
-    <article className="recipe-card animate-fade-in" onClick={onClick}>
+    <article className="recipe-card animate-fade-in" onClick={onClick} style={style}>
       <div className="card-media-wrapper">
         <img 
           src={imgSrc} 

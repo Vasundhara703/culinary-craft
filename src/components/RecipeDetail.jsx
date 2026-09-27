@@ -137,37 +137,36 @@ export default function RecipeDetail({ recipe, onBack, onAddToShoppingList }) {
       return;
     }
 
-    // Cancel current speaking if active
-    if (window.speechSynthesis.speaking) {
+    if (currentlySpeaking === key && window.speechSynthesis.speaking) {
       window.speechSynthesis.cancel();
-      if (currentlySpeaking === key) {
+      setCurrentlySpeaking(null);
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    setTimeout(() => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = language === 'hi' ? 'hi-IN' : 'en-US';
+      
+      utterance.onend = () => setCurrentlySpeaking(null);
+      utterance.onerror = (e) => {
+        console.error("Speech Synthesis Error:", e);
         setCurrentlySpeaking(null);
-        return;
+      };
+
+      const voices = window.speechSynthesis.getVoices();
+      if (language === 'hi') {
+        const hiVoice = voices.find(v => v.lang.startsWith('hi') || v.name.includes('India') || v.name.includes('Hindi'));
+        if (hiVoice) utterance.voice = hiVoice;
+      } else {
+        const enVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en-GB' || v.name.includes('English'));
+        if (enVoice) utterance.voice = enVoice;
       }
-    }
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    
-    // Set language code based on current language
-    utterance.lang = language === 'hi' ? 'hi-IN' : 'en-US';
-
-    utterance.onend = () => {
-      setCurrentlySpeaking(null);
-    };
-    
-    utterance.onerror = () => {
-      setCurrentlySpeaking(null);
-    };
-
-    // Attempt to set a native Hindi voice if Hindi is active
-    const voices = window.speechSynthesis.getVoices();
-    if (language === 'hi') {
-      const hiVoice = voices.find(v => v.lang.startsWith('hi') || v.name.includes('India') || v.name.includes('Hindi'));
-      if (hiVoice) utterance.voice = hiVoice;
-    }
-
-    setCurrentlySpeaking(key);
-    window.speechSynthesis.speak(utterance);
+      setCurrentlySpeaking(key);
+      window.speechSynthesis.speak(utterance);
+    }, 50);
   };
 
   // Step Timer functions (for standard inline list)
@@ -469,76 +468,60 @@ export default function RecipeDetail({ recipe, onBack, onAddToShoppingList }) {
                     </div>
                   </div>
                 </div>
-              ) : playVideo ? (
-                <div>
-                  <div className="video-wrapper animate-fade-in">
-                    <iframe 
-                      src={`${getYoutubeEmbedUrl(videoUrl)}?autoplay=1`} 
-                      title={`${title} Cooking Tutorial`} 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '16px', gap: '12px', flexWrap: 'wrap' }}>
-                    <p style={{ fontSize: '14px', color: 'var(--text-secondary)', fontStyle: 'italic', margin: 0 }}>
-                      Follow along with this step-by-step masterclass video to perfect your technique.
-                    </p>
-                    <button 
-                      className="btn-pantry-check-secondary"
-                      style={{ width: 'auto', marginTop: 0, padding: '8px 16px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}
-                      onClick={() => {
-                        setPlayVideo(false);
-                        setShowPoster(true);
-                      }}
-                    >
-                      <Sparkles size={14} /> Video not loading? Show Recipe Poster
-                    </button>
-                  </div>
-                </div>
               ) : (
                 <div className="video-wrapper">
-                  <div 
-                    className="video-placeholder-graphic"
-                    style={{
-                      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.8)), url(${imgSrc})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      position: 'absolute',
-                      width: '100%',
-                      height: '100%',
-                      top: 0,
-                      left: 0
-                    }}
-                    onClick={() => setPlayVideo(true)}
-                  >
-                    <div className="video-play-btn animate-pulse-ring">
-                      <Play size={28} fill="white" style={{ marginLeft: '4px' }} />
-                    </div>
-                    <h3 className="serif-title" style={{ color: '#fff', fontSize: '24px', marginBottom: '8px', textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
-                      Watch: {title} Video Guide
-                    </h3>
-                    <p style={{ color: '#e0e0e0', fontSize: '14px', textShadow: '0 1px 2px rgba(0,0,0,0.6)' }}>
-                      Prep: {prepTime}m | Cook: {cookTime}m | Click to Play Tutorial
-                    </p>
-                    <button 
-                      className="btn-pantry-check-secondary"
-                      style={{ 
-                        width: 'auto', 
-                        marginTop: '20px', 
-                        padding: '6px 14px', 
-                        fontSize: '12px', 
-                        borderColor: 'rgba(255,255,255,0.4)', 
-                        color: '#fff',
-                        backgroundColor: 'rgba(0,0,0,0.4)'
+                  {playVideo ? (
+                    <iframe
+                      src={getYoutubeEmbedUrl(videoUrl) + "?autoplay=1"}
+                      title={`${title} Recipe Video`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      style={{ border: 0 }}
+                    ></iframe>
+                  ) : (
+                    <div 
+                      className="video-placeholder-graphic"
+                      style={{
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.8)), url(${imgSrc})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        top: 0,
+                        left: 0
                       }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowPoster(true);
-                      }}
+                      onClick={() => setPlayVideo(true)}
                     >
-                      Or Open Recipe Poster
-                    </button>
-                  </div>
+                      <div className="video-play-btn animate-pulse-ring">
+                        <Play size={28} fill="white" style={{ marginLeft: '4px' }} />
+                      </div>
+                      <h3 className="serif-title" style={{ color: '#fff', fontSize: '24px', marginBottom: '8px', textShadow: '0 2px 4px rgba(0,0,0,0.6)' }}>
+                        Watch: {title} Video Guide
+                      </h3>
+                      <p style={{ color: '#e0e0e0', fontSize: '14px', textShadow: '0 1px 2px rgba(0,0,0,0.6)' }}>
+                        Prep: {prepTime}m | Cook: {cookTime}m | Click to Play
+                      </p>
+                      <button 
+                        className="btn-pantry-check-secondary"
+                        style={{ 
+                          width: 'auto', 
+                          marginTop: '20px', 
+                          padding: '6px 14px', 
+                          fontSize: '12px', 
+                          borderColor: 'rgba(255,255,255,0.4)', 
+                          color: '#fff',
+                          backgroundColor: 'rgba(0,0,0,0.4)'
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowPoster(true);
+                        }}
+                      >
+                        Or Open Recipe Poster
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

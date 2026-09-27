@@ -2219,7 +2219,7 @@ html {
 }
 
 .about-feature-card {
-  padding: 32px;
+  padding: 48px 32px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
   background: var(--surface-primary);
@@ -2232,7 +2232,7 @@ html {
 }
 
 .about-feature-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-12px) scale(1.05);
   box-shadow: var(--shadow-md);
   border-color: var(--accent-primary);
 }
@@ -2247,6 +2247,7 @@ html {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  animation: leaf-hover-1 4s ease-in-out infinite;
 }
 
 .about-feature-title {
@@ -2612,7 +2613,7 @@ html {
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  max-width: 480px;
+  max-width: 600px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -2664,8 +2665,8 @@ html {
 /* Orbiting thumbnails */
 .orbit-thumbnail {
   position: absolute;
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   border: 3px solid var(--surface-primary);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);

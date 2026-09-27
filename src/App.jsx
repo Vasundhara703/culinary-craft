@@ -4,9 +4,10 @@ import RecipeCard from './components/RecipeCard';
 import RecipeDetail from './components/RecipeDetail';
 import AdminPanel from './components/AdminPanel';
 import ShoppingList from './components/ShoppingList';
+import Sidebar from './components/Sidebar';
 import { defaultRecipes } from './data/defaultRecipes';
 import { kaggleRecipes } from './data/kaggleRecipes';
-import { Search, Flame, Clock, Check } from 'lucide-react';
+import { Search, Flame, Clock, Check, Lock } from 'lucide-react';
 import { healthProfilesList, matchesHealthProfile } from './data/healthProfiles';
 
 const checkIsLocal = () => {
@@ -49,11 +50,10 @@ export default function App() {
   });
   const [currentView, setView] = useState(() => {
     if (sessionStorage.getItem('admin_authed') === 'true') return 'admin';
-    if (sessionStorage.getItem('user_authed') === 'true') return 'home';
     return 'landing';
   });
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const [returnView, setReturnView] = useState('home');
+  const [returnView, setReturnView] = useState('landing');
   
   // Creator Card Slide State
   const [creatorSlide, setCreatorSlide] = useState(0);
@@ -71,6 +71,7 @@ export default function App() {
   // Interface Options
   const [theme, setTheme] = useState('light');
   const [isShoppingListOpen, setIsShoppingListOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
   // Filter States
   const [searchQuery, setSearchQuery] = useState('');
@@ -92,17 +93,6 @@ export default function App() {
   const [adminPassword, setAdminPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [syncStatus, setSyncStatus] = useState('syncing');
-
-  // Unified Login Inputs
-  const [loginUsername, setLoginUsername] = useState('');
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [loginErrorMsg, setLoginErrorMsg] = useState('');
-
-  // OTP States
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpLoading, setOtpLoading] = useState(false);
-  const [otpMessage, setOtpMessage] = useState('');
 
   // Feedback Form States
   const [feedbackName, setFeedbackName] = useState('');
@@ -151,148 +141,38 @@ export default function App() {
     }
   };
 
-  // Route Guard to redirect unauthenticated visitors to landing portal
+  // Route Guard to protect admin access
   useEffect(() => {
     const isAdmin = sessionStorage.getItem('admin_authed') === 'true';
-    const isUser = sessionStorage.getItem('user_authed') === 'true';
-    if (!isAdmin && !isUser && currentView !== 'landing') {
+    if (currentView === 'admin' && !isAdmin) {
       setView('landing');
     }
   }, [currentView]);
 
-  const handleSendOTP = async (e) => {
+  const handleAdminLogin = (e) => {
     e.preventDefault();
-    const emailLower = loginEmail.trim().toLowerCase();
-    const usernameTrim = loginUsername.trim();
+    const emailLower = adminEmail.trim().toLowerCase();
+    const pass = adminPassword.trim();
 
-    if (!emailLower) {
-      setLoginErrorMsg('Please fill in your Gmail/Email first.');
+    if (!emailLower || !pass) {
+      setLoginError('Please enter admin email and passcode.');
       return;
     }
 
-    if (emailLower === 'mishravasundhara6@gmail.com' || emailLower === 'admin@culinarycraft.com') {
-      setLoginErrorMsg('Admin accounts use a static passcode. Please enter the passcode.');
-      return;
-    }
-
-    setOtpLoading(true);
-    setLoginErrorMsg('');
-    setOtpMessage('');
-
-    try {
-      const response = await fetch('/api/otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: emailLower,
-          username: usernameTrim || 'Guest Chef',
-          action: 'send'
-        })
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        setOtpSent(true);
-        if (data.status === 'logged') {
-          setOtpMessage(data.message);
-        } else {
-          setOtpMessage('One-time passcode sent to your email!');
-        }
-      } else {
-        setLoginErrorMsg(data.error || 'Failed to send OTP.');
-      }
-    } catch (err) {
-      console.error("OTP send error:", err);
-      setLoginErrorMsg('Network error. Failed to connect to server.');
-    } finally {
-      setOtpLoading(false);
-    }
-  };
-
-  const handleUnifiedLogin = async (e) => {
-    e.preventDefault();
-    const emailLower = loginEmail.trim().toLowerCase();
-    const usernameTrim = loginUsername.trim();
-    const password = loginPassword.trim();
-
-    if (!emailLower || !password) {
-      setLoginErrorMsg('Please fill in Gmail and Passcode.');
-      return;
-    }
-
-    // Check if it's the Admin logging in
     if (
       (emailLower === 'mishravasundhara6@gmail.com' || emailLower === 'admin@culinarycraft.com') && 
-      password === 'craft2026'
+      pass === 'craft2026'
     ) {
       setIsAdminAuthenticated(true);
       sessionStorage.setItem('admin_authed', 'true');
       sessionStorage.setItem('admin_email', emailLower);
-      
-      // Clear login inputs
-      setLoginUsername('');
-      setLoginEmail('');
-      setLoginPassword('');
-      setLoginErrorMsg('');
-      setOtpSent(false);
-      setOtpMessage('');
-      
+      setAdminEmail('');
+      setAdminPassword('');
+      setLoginError('');
       setView('admin');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // It's a standard user logging in
-      if (!usernameTrim) {
-        setLoginErrorMsg('Please choose a username to enter as a guest.');
-        return;
-      }
-
-      if (emailLower === 'mishravasundhara6@gmail.com' || emailLower === 'admin@culinarycraft.com') {
-        setLoginErrorMsg('Incorrect Admin passcode. Please try again.');
-        return;
-      }
-
-      // Guest logins verify the OTP via API
-      setLoginErrorMsg('');
-      try {
-        const response = await fetch('/api/otp', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: emailLower,
-            otp: password,
-            action: 'verify'
-          })
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-          setIsUserAuthenticated(true);
-          setUserDisplayName(usernameTrim);
-          sessionStorage.setItem('user_authed', 'true');
-          sessionStorage.setItem('user_name', usernameTrim);
-          sessionStorage.setItem('user_email', emailLower);
-          
-          // Clear login inputs
-          setLoginUsername('');
-          setLoginEmail('');
-          setLoginPassword('');
-          setLoginErrorMsg('');
-          setOtpSent(false);
-          setOtpMessage('');
-          
-          setView('home');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          setLoginErrorMsg(data.error || 'Verification failed. Please check your passcode.');
-        }
-      } catch (err) {
-        console.error("OTP verify error:", err);
-        setLoginErrorMsg('Network error. Failed to verify OTP.');
-      }
+      setLoginError('Invalid administrator credentials. Please check your email and passcode.');
     }
   };
 
@@ -305,9 +185,9 @@ export default function App() {
     sessionStorage.removeItem('user_authed');
     sessionStorage.removeItem('user_name');
     sessionStorage.removeItem('user_email');
-    setOtpSent(false);
-    setOtpMessage('');
-    
+    setAdminEmail('');
+    setAdminPassword('');
+    setLoginError('');
     setView('landing');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -594,7 +474,7 @@ export default function App() {
   };
 
   // Navigation handlers
-  const handleOpenDetail = (recipe, fromView = 'home') => {
+  const handleOpenDetail = (recipe, fromView = 'landing') => {
     setSelectedRecipe(recipe);
     setReturnView(fromView);
     setView('detail');
@@ -602,7 +482,7 @@ export default function App() {
   };
 
   const handleBack = () => {
-    setView(returnView);
+    setView(returnView || 'landing');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -658,13 +538,22 @@ export default function App() {
         isUserAuthenticated={isUserAuthenticated}
         isAdminAuthenticated={isAdminAuthenticated}
         onLogout={handleLogout}
+        onToggleSidebar={() => setIsSidebarOpen(true)}
+      />
+
+      <Sidebar 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+        currentView={currentView} 
+        setView={setView} 
+        isAdminAuthenticated={isAdminAuthenticated} 
       />
 
       <main style={{ flexGrow: 1 }}>
-        {currentView === 'home' && (
+        {(currentView === 'landing' || currentView === 'home') && (
           <>
             {/* Hero Slider Section */}
-            <section className="hero-slider-section">
+            <section className="hero-slider-section" id="about">
               {/* Floating Leaf Micro-Animations */}
               <svg className="floating-leaf leaf-1" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
                 <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
@@ -687,25 +576,18 @@ export default function App() {
                 <div className="hero-slider-grid">
                   {/* Left Column: Content */}
                   <div className="hero-slider-content">
-                    <span className="hero-badge">Featured Recipe</span>
+                    <span className="hero-badge">Welcome to Culinary Craft</span>
                     <h1 className="hero-title">
-                      {activeRecipe?.title.split(' ').slice(0, -2).join(' ')}{' '}
+                      Fuel Your Body with{' '}
                       <span className="highlight-red">
-                        {activeRecipe?.title.split(' ').slice(-2).join(' ')}
+                        Nutrient-Rich Recipes
                       </span>
                     </h1>
                     <p className="hero-description">
-                      {activeRecipe?.description}
+                      Discover exquisite recipes, dynamically adjust serving sizes, check alternative ingredients, and cook hands-free with guided voice timers and multilingual instructions.
                     </p>
 
                     <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                      <button 
-                        className="btn-hero-order"
-                        onClick={() => handleOpenDetail(activeRecipe, 'home')}
-                      >
-                        Explore Recipe
-                      </button>
-
                       {/* Slider Navigation */}
                       <div className="hero-slider-navigation">
                         <span 
@@ -768,8 +650,49 @@ export default function App() {
               </div>
             </section>
 
+            {/* Highlights Grid */}
+            <div className="container" style={{ marginTop: '40px' }}>
+              <div className="about-features-container">
+                <div className="about-feature-card">
+                  <div className="about-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-scale"><path d="m16 16 3-8 3 8c-.87.65-2.24.75-3 .75s-2.13-.1-3-.75Z"/><path d="m2 16 3-8 3 8c-.87.65-2.24.75-3 .75s-2.13-.1-3-.75Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>
+                  </div>
+                  <h3 className="about-feature-title">Dynamic Scaling</h3>
+                  <p className="about-feature-desc">Scale serving sizes instantly. Ingredient quantities automatically adjust in real-time with decimal precision.</p>
+                </div>
+                
+                <div className="about-feature-card">
+                  <div className="about-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-timer"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="12" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg>
+                  </div>
+                  <h3 className="about-feature-title">Smart Step Timers</h3>
+                  <p className="about-feature-desc">Interactive timers integrated directly into cooking steps, complete with voice countdown narration alerts.</p>
+                </div>
+                
+                <div className="about-feature-card">
+                  <div className="about-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                  </div>
+                  <h3 className="about-feature-title">Voice & Guided AI</h3>
+                  <p className="about-feature-desc">Hands-free guided cooking mode with full text-to-speech support and interactive AI Chef chat rescue tips.</p>
+                </div>
+
+                <div className="about-feature-card">
+                  <div className="about-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                  </div>
+                  <h3 className="about-feature-title">Bilingual Support</h3>
+                  <p className="about-feature-desc">Translate instructions instantly between English and Hindi, with native accent voice synthesis for both.</p>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {currentView === 'recipes' && (
+          <>
             {/* Search & Filters Section */}
-            <section className="filter-section container" style={{ marginTop: '60px' }}>
+            <section className="filter-section container" id="recipes" style={{ marginTop: '60px' }}>
               <div className="filter-dashboard">
                 <div className="search-box">
                   <Search className="search-icon-left" size={22} />
@@ -888,7 +811,7 @@ export default function App() {
                     <RecipeCard 
                       key={recipe.id} 
                       recipe={recipe} 
-                      onClick={() => handleOpenDetail(recipe, 'home')}
+                      onClick={() => handleOpenDetail(recipe, currentView)}
                       style={{ animationDelay: `${(idx % 12) * 0.05}s` }}
                     />
                   ))}
@@ -898,144 +821,8 @@ export default function App() {
           </>
         )}
 
-        {currentView === 'landing' && (
+        {currentView === 'blogs' && (
           <>
-            {/* Hero Slider Section */}
-            <section className="hero-slider-section" id="about">
-              {/* Floating Leaf Micro-Animations */}
-              <svg className="floating-leaf leaf-1" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
-                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
-                <path d="M12 16L2 22" />
-              </svg>
-              <svg className="floating-leaf leaf-2" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
-                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
-                <path d="M12 16L2 22" />
-              </svg>
-              <svg className="floating-leaf leaf-3" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
-                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
-                <path d="M12 16L2 22" />
-              </svg>
-              <svg className="floating-leaf leaf-4" viewBox="0 0 24 24" fill="#52be80" stroke="#27ae60" strokeWidth="0.5">
-                <path d="M2 22C2 22 8 20 12 16C16 12 22 2 22 2C22 2 12 8 8 12C4 16 2 22 2 22Z" />
-                <path d="M12 16L2 22" />
-              </svg>
-
-              <div className="container">
-                <div className="hero-slider-grid">
-                  {/* Left Column: Content */}
-                  <div className="hero-slider-content">
-                    <span className="hero-badge">Welcome to Culinary Craft</span>
-                    <h1 className="hero-title">
-                      Fuel Your Body with{' '}
-                      <span className="highlight-red">
-                        Nutrient-Rich Recipes
-                      </span>
-                    </h1>
-                    <p className="hero-description">
-                      Discover exquisite recipes, dynamically adjust serving sizes, check alternative ingredients, and cook hands-free with guided voice timers and multilingual instructions.
-                    </p>
-
-                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                      {/* Slider Navigation */}
-                      <div className="hero-slider-navigation">
-                        <span 
-                          className="hero-nav-arrow" 
-                          onClick={() => setActiveSlide(prev => (prev === 0 ? finalSliderRecipes.length - 1 : prev - 1))}
-                        >
-                          ← Previous
-                        </span>
-                        <span>|</span>
-                        <span 
-                          className="hero-nav-arrow" 
-                          onClick={() => setActiveSlide(prev => (prev === finalSliderRecipes.length - 1 ? 0 : prev + 1))}
-                        >
-                          Next →
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column: Circular Visual & Orbit */}
-                  <div className="hero-slider-visual">
-                    <div className="orbit-container">
-                      {/* Main Plate */}
-                      <div 
-                        className="main-plate-wrapper"
-                        style={{ transform: `rotate(${activeSlide * 72}deg)` }}
-                      >
-                        <img 
-                          src={activeRecipe?.image || DEFAULT_RECIPE_IMAGE} 
-                          className="main-plate-img" 
-                          alt={activeRecipe?.title} 
-                          style={{ transform: `rotate(-${activeSlide * 72}deg)` }}
-                        />
-                      </div>
-
-                      {/* Orbiting Thumbnails wrapped in revolving ring */}
-                      <div className="orbit-revolving-ring">
-                        {finalSliderRecipes.map((slide, idx) => {
-                          const angle = orbitAngles[idx];
-                          const rad = (angle * Math.PI) / 180;
-                          const left = 50 + 45 * Math.cos(rad);
-                          const top = 50 + 45 * Math.sin(rad);
-
-                          return (
-                            <div 
-                              key={slide.id}
-                              className={`orbit-thumbnail ${activeSlide === idx ? 'active' : ''}`}
-                              style={{ left: `${left}%`, top: `${top}%` }}
-                              onClick={() => setActiveSlide(idx)}
-                              title={slide.title}
-                            >
-                              <img src={slide.image || DEFAULT_RECIPE_IMAGE} alt={slide.title} />
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-            {/* Highlights Grid */}
-            <div className="container" style={{ marginTop: '40px' }}>
-              <div className="about-features-container">
-                <div className="about-feature-card">
-                  <div className="about-feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-scale"><path d="m16 16 3-8 3 8c-.87.65-2.24.75-3 .75s-2.13-.1-3-.75Z"/><path d="m2 16 3-8 3 8c-.87.65-2.24.75-3 .75s-2.13-.1-3-.75Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>
-                  </div>
-                  <h3 className="about-feature-title">Dynamic Scaling</h3>
-                  <p className="about-feature-desc">Scale serving sizes instantly. Ingredient quantities automatically adjust in real-time with decimal precision.</p>
-                </div>
-                
-                <div className="about-feature-card">
-                  <div className="about-feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-timer"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="12" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg>
-                  </div>
-                  <h3 className="about-feature-title">Smart Step Timers</h3>
-                  <p className="about-feature-desc">Interactive timers integrated directly into cooking steps, complete with voice countdown narration alerts.</p>
-                </div>
-                
-                <div className="about-feature-card">
-                  <div className="about-feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-                  </div>
-                  <h3 className="about-feature-title">Voice & Guided AI</h3>
-                  <p className="about-feature-desc">Hands-free guided cooking mode with full text-to-speech support and interactive AI Chef chat rescue tips.</p>
-                </div>
-
-                <div className="about-feature-card">
-                  <div className="about-feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-languages"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
-                  </div>
-                  <h3 className="about-feature-title">Bilingual Support</h3>
-                  <p className="about-feature-desc">Translate instructions instantly between English and Hindi, with native accent voice synthesis for both.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* The primary founder profile is rendered side-by-side with the feedback form in the section below */}
-
             {/* Famous Chefs' Blogs Section */}
             <section className="container animate-fade-in" id="blogs" style={{ marginTop: '60px', marginBottom: '20px' }}>
               <div style={{ marginBottom: '32px', textAlign: 'center' }}>
@@ -1178,9 +965,13 @@ export default function App() {
                 </div>
               </div>
             </section>
+          </>
+        )}
 
+        {currentView === 'founder' && (
+          <>
             {/* Creator & Feedback Section */}
-            <section className="bottom-dashboard-grid container" style={{ marginTop: '40px', marginBottom: '60px' }}>
+            <section className="bottom-dashboard-grid container" style={{ marginTop: '40px', marginBottom: '60px', display: 'flex', justifyContent: 'center' }}>
               
               {/* Creator / Founder Card */}
               <div 
@@ -1338,7 +1129,13 @@ export default function App() {
                   />
                 </div>
               </div>
+            </section>
+          </>
+        )}
 
+        {currentView === 'feedback' && (
+          <>
+            <section className="bottom-dashboard-grid container" style={{ marginTop: '40px', marginBottom: '60px', display: 'flex', justifyContent: 'center' }}>
               {/* Feedback Form Card */}
               <div id="feedback" className="glass-panel animate-fade-in feedback-card">
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
@@ -1443,114 +1240,6 @@ export default function App() {
                 )}
               </div>
             </section>
-
-            {/* Unified Login Section */}
-            <section className="login-portal-section" id="login">
-              <div className="login-portal-card glass-panel animate-fade-in" style={{ background: 'var(--surface-primary)', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-lg)' }}>
-                <h2 className="serif-title login-portal-title">Join the Culinary Journey</h2>
-                <p className="login-portal-subtitle">Login to explore recipes or manage the database</p>
-                
-                <form onSubmit={handleUnifiedLogin}>
-                  <div className="form-group" style={{ marginBottom: '16px', textAlign: 'left' }}>
-                    <label htmlFor="login-username" className="form-label" style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Username</label>
-                    <input 
-                      type="text" 
-                      id="login-username"
-                      className="form-input" 
-                      placeholder="Chef Explorer" 
-                      value={loginUsername}
-                      onChange={(e) => setLoginUsername(e.target.value)}
-                      style={{ fontSize: '14px', padding: '10px 14px' }}
-                    />
-                    <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Required for guest access (not needed for admin)</span>
-                  </div>
-                  
-                  <div className="form-group" style={{ marginBottom: '16px', textAlign: 'left' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <label htmlFor="login-email" className="form-label" style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>Gmail / Email *</label>
-                      {loginEmail.trim() && 
-                       !(loginEmail.trim().toLowerCase() === 'mishravasundhara6@gmail.com' || loginEmail.trim().toLowerCase() === 'admin@culinarycraft.com') && (
-                        <button 
-                          type="button"
-                          onClick={handleSendOTP}
-                          disabled={otpLoading}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            color: 'var(--accent-primary)',
-                            fontSize: '11.5px',
-                            fontWeight: '700',
-                            cursor: 'pointer',
-                            padding: 0,
-                            textDecoration: 'underline'
-                          }}
-                        >
-                          {otpLoading ? 'Sending...' : (otpSent ? 'Resend OTP' : 'Send OTP')}
-                        </button>
-                      )}
-                    </div>
-                    <input 
-                      type="email" 
-                      id="login-email"
-                      className="form-input" 
-                      placeholder="you@gmail.com" 
-                      value={loginEmail}
-                      onChange={(e) => {
-                        setLoginEmail(e.target.value);
-                        setOtpSent(false);
-                        setOtpMessage('');
-                      }}
-                      required
-                      style={{ fontSize: '14px', padding: '10px 14px', marginTop: '6px' }}
-                    />
-                    {otpMessage && (
-                      <span style={{ fontSize: '11px', color: 'var(--accent-secondary)', marginTop: '4px', display: 'block', fontWeight: '600' }}>
-                        ✓ {otpMessage}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="form-group" style={{ marginBottom: '24px', textAlign: 'left' }}>
-                    <label htmlFor="login-password" className="form-label" style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      {(loginEmail.trim().toLowerCase() === 'mishravasundhara6@gmail.com' || loginEmail.trim().toLowerCase() === 'admin@culinarycraft.com') 
-                        ? 'Admin Passcode *' 
-                        : 'One-Time Passcode (OTP) *'}
-                    </label>
-                    <input 
-                      type="password" 
-                      id="login-password"
-                      className="form-input" 
-                      placeholder={(loginEmail.trim().toLowerCase() === 'mishravasundhara6@gmail.com' || loginEmail.trim().toLowerCase() === 'admin@culinarycraft.com')
-                        ? '••••••••'
-                        : '6-digit OTP code'}
-                      value={loginPassword}
-                      onChange={(e) => setLoginPassword(e.target.value)}
-                      required
-                      style={{ fontSize: '14px', padding: '10px 14px' }}
-                    />
-                    {!(loginEmail.trim().toLowerCase() === 'mishravasundhara6@gmail.com' || loginEmail.trim().toLowerCase() === 'admin@culinarycraft.com') && !otpSent && (
-                      <span style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px', display: 'block' }}>
-                        Click "Send OTP" to generate and receive your verification code.
-                      </span>
-                    )}
-                  </div>
-
-                  {loginErrorMsg && (
-                    <p style={{ color: 'var(--accent-primary)', fontSize: '13px', marginBottom: '16px', textAlign: 'center', fontWeight: '500' }}>
-                      ⚠️ {loginErrorMsg}
-                    </p>
-                  )}
-
-                  <button 
-                    type="submit" 
-                    className="btn-pantry-check" 
-                    style={{ width: '100%', padding: '12px', fontSize: '14px', fontWeight: '600' }}
-                  >
-                    Login & Explore Recipes
-                  </button>
-                </form>
-              </div>
-            </section>
           </>
         )}
 
@@ -1601,11 +1290,8 @@ export default function App() {
                 className="logo-group" 
                 onClick={(e) => { 
                   e.preventDefault(); 
-                  if (isUserAuthenticated || isAdminAuthenticated) {
-                    setView('home'); 
-                  } else {
-                    setView('landing'); 
-                  }
+                  setView('landing'); 
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}
               >
@@ -1635,10 +1321,11 @@ export default function App() {
             <div className="footer-col">
               <h4 className="footer-col-title">Quick Links</h4>
               <div className="footer-links-list">
-                <a href="#about" className="footer-link-item" onClick={() => { setView('landing'); }}>Home</a>
-                <a href="#founder" className="footer-link-item" onClick={() => { setView('landing'); }}>About Us</a>
-                <a href="#blogs" className="footer-link-item" onClick={() => { setView('landing'); }}>Chefs' Blogs</a>
-                <a href="#feedback" className="footer-link-item" onClick={() => { setView('landing'); }}>Feedback</a>
+                <a href="#about" className="footer-link-item" onClick={(e) => { e.preventDefault(); setView('landing'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Home</a>
+                <a href="#recipes" className="footer-link-item" onClick={(e) => { e.preventDefault(); setView('recipes'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Recipes</a>
+                <a href="#founder" className="footer-link-item" onClick={(e) => { e.preventDefault(); setView('founder'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>About Us</a>
+                <a href="#blogs" className="footer-link-item" onClick={(e) => { e.preventDefault(); setView('blogs'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Chefs' Blogs</a>
+                <a href="#feedback" className="footer-link-item" onClick={(e) => { e.preventDefault(); setView('feedback'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Feedback</a>
               </div>
             </div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon, ShoppingBag, Settings, Home, LogOut } from 'lucide-react';
+import { Sun, Moon, ShoppingBag, Settings, Lock, Home, LogOut, Menu } from 'lucide-react';
 
 export default function Header({ 
   currentView, 
@@ -8,11 +8,31 @@ export default function Header({
   toggleTheme, 
   shoppingListCount, 
   toggleShoppingListOpen,
-  isUserAuthenticated,
   isAdminAuthenticated,
-  onLogout
+  onLogout,
+  onToggleSidebar
 }) {
-  const isLoggedIn = isUserAuthenticated || isAdminAuthenticated;
+  const navigateToSection = (e, sectionId) => {
+    e.preventDefault();
+    if (currentView !== 'landing') {
+      setView('landing');
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 50);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <header className="app-header glass-panel">
@@ -22,13 +42,10 @@ export default function Header({
           className="logo-group" 
           onClick={(e) => { 
             e.preventDefault(); 
-            if (isLoggedIn) {
-              setView('home');
-            } else {
-              setView('landing');
-            }
+            setView('landing');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}
         >
           <img 
             src="/logo.png" 
@@ -49,54 +66,41 @@ export default function Header({
           </span>
         </a>
 
-        <nav className="main-nav">
-          {!isLoggedIn ? (
-            <>
-              <a href="#about" className="nav-link">About Us</a>
-              <a href="#founder" className="nav-link">Founder</a>
-              <a href="#blogs" className="nav-link">Chef Blogs</a>
-              <a href="#feedback" className="nav-link">Feedback</a>
-              <a 
-                href="#login" 
-                className="nav-link" 
-                style={{ 
-                  padding: '6px 16px', 
-                  borderRadius: 'var(--radius-full)', 
-                  background: 'var(--accent-primary)', 
-                  color: '#fff', 
-                  fontWeight: '600' 
-                }}
-              >
-                Get Started
-              </a>
-            </>
-          ) : (
-            <>
-              <a 
-                href="#" 
-                className={`nav-link ${currentView === 'home' ? 'active' : ''}`}
-                onClick={(e) => { e.preventDefault(); setView('home'); }}
-              >
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Home size={16} /> Explore Recipes
-                </span>
-              </a>
-              {isAdminAuthenticated && (
-                <a 
-                  href="#" 
-                  className={`nav-link ${currentView === 'admin' ? 'active' : ''}`}
-                  onClick={(e) => { e.preventDefault(); setView('admin'); }}
-                >
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <Settings size={16} /> Admin Panel
-                  </span>
-                </a>
-              )}
-            </>
-          )}
-        </nav>
+        {/* Header center area is now empty because navigation is in sidebar */}
+        <div className="main-nav-placeholder" style={{ flexGrow: 1 }}></div>
 
         <div className="header-actions">
+          {/* Hamburger Menu - Toggle Sidebar */}
+          <button 
+            onClick={onToggleSidebar}
+            className="btn-icon-round"
+            aria-label="Open Navigation Menu"
+            title="Open Navigation Menu"
+            style={{ 
+              backgroundColor: 'var(--accent-primary)', 
+              color: 'white', 
+              border: 'none',
+              boxShadow: '0 2px 8px rgba(211, 84, 0, 0.3)'
+            }}
+          >
+            <Menu size={20} />
+          </button>
+
+          {/* Shopping Bag - always visible to all users */}
+          <button 
+            onClick={toggleShoppingListOpen} 
+            className="btn-icon-round"
+            aria-label="View Shopping List"
+            title="View Shopping List"
+            style={{ position: 'relative' }}
+          >
+            <ShoppingBag size={20} />
+            {shoppingListCount > 0 && (
+              <span className="badge-count">{shoppingListCount}</span>
+            )}
+          </button>
+
+          {/* Theme Toggle */}
           <button 
             onClick={toggleTheme} 
             className="btn-icon-round"
@@ -106,32 +110,19 @@ export default function Header({
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          {isLoggedIn && (
-            <button 
-              onClick={toggleShoppingListOpen} 
-              className="btn-icon-round"
-              aria-label="View Shopping List"
-              title="View Shopping List"
-            >
-              <ShoppingBag size={20} />
-              {shoppingListCount > 0 && (
-                <span className="badge-count">{shoppingListCount}</span>
-              )}
-            </button>
-          )}
-
-          {isLoggedIn && (
+          {/* Admin Logout button if logged in as Admin */}
+          {isAdminAuthenticated && (
             <button
               onClick={onLogout}
               className="btn-icon-round"
               style={{
                 color: 'var(--accent-primary)',
-                borderColor: 'rgba(211, 84, 0, 0.2)'
+                borderColor: 'rgba(211, 84, 0, 0.25)'
               }}
-              title="Log Out"
-              aria-label="Log Out"
+              title="Log Out Admin"
+              aria-label="Log Out Admin"
             >
-              <LogOut size={20} />
+              <LogOut size={18} />
             </button>
           )}
         </div>
@@ -139,4 +130,5 @@ export default function Header({
     </header>
   );
 }
+
 

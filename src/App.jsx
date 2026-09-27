@@ -230,10 +230,7 @@ export default function App() {
     // 3. Cloud Synchronization (Background Fetch & Sync)
     const syncWithCloud = async () => {
       try {
-        const isLocal = checkIsLocal();
-        const url = isLocal 
-          ? `https://kvdb.io/TvGYRp8bXXZoRaeWemPWCu/recipes_db?t=${Date.now()}` 
-          : `/api/recipes?t=${Date.now()}`;
+        const url = `/api/recipes?t=${Date.now()}`;
         const response = await fetch(url);
         if (response.ok) {
           const cloudData = await response.json();
@@ -342,8 +339,7 @@ export default function App() {
       return;
     }
     try {
-      const isLocal = checkIsLocal();
-      const url = isLocal ? 'https://kvdb.io/TvGYRp8bXXZoRaeWemPWCu/recipes_db' : '/api/recipes';
+      const url = '/api/recipes';
       
       const response = await fetch(url, {
         method: 'POST',
